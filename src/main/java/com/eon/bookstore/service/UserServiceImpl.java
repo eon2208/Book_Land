@@ -36,6 +36,9 @@ public class UserServiceImpl implements UserService {
     private AddressDao addressDao;
 
     @Autowired
+    private BasketService basketService;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -101,6 +104,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(User user) {
+
+        // deleting user basket with user
+        basketService.deleteBasketById(user.getBasketId());
         userDao.deleteUser(user);
     }
 

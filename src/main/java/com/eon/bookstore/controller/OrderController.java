@@ -1,6 +1,7 @@
 package com.eon.bookstore.controller;
 
 import com.eon.bookstore.entity.Basket;
+import com.eon.bookstore.entity.Order;
 import com.eon.bookstore.entity.TotalBasket;
 import com.eon.bookstore.entity.User;
 import com.eon.bookstore.service.BasketService;
@@ -52,6 +53,23 @@ public class OrderController {
 
 
         return "order/order-confirmation";
+    }
+
+    @GetMapping("/orders")
+    public String showOrders(Model model){
+
+        // get all orders
+        List<Order> orderList = orderService.getOrders();
+        if(orderList.isEmpty()){
+            model.addAttribute("emptyError", true);
+
+            return "redirect:/admin/list";
+        }
+
+        // send it as a model
+        model.addAttribute("orderList", orderList);
+
+        return "order/order-list";
     }
 
 

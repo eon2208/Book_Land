@@ -9,14 +9,55 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Users List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous">
 </head>
 <body>
 
-<c:forEach items="${userList}" var="user">
-    ${user.firstName}<br>
-    ${user.lastName}<br>
-</c:forEach>
+<div class="container">
+    <h3>Users :</h3>
+    <hr>
+
+    <!-- Add a button-->
+    <a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary btn-sm mb-3">Add User</a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <c:forEach items="${userList}" var="user">
+
+            <c:url value="/admin/deleteUser" var="deleteLink">
+                <c:param name="userName" value="${user.userName}"/>
+            </c:url>
+
+           <%-- <c:url value="/admin/deleteUser" var="deleteLink">
+                <c:param name="userName" value="${user.userName}"/>
+            </c:url>--%>
+
+        <tr>
+            <td>${user.firstName}</td>
+            <td>${user.lastName}<br></td>
+            <td>${user.email}<br></td>
+            <td>
+                <a href="${ordersLink}" class="btn btn-info btn-sm">Orders</a>
+                <a href="${detailLink}" class="btn btn-warning btn-sm">Info</a>
+                <a href="${deleteLink}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

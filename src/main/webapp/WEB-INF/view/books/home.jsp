@@ -22,50 +22,57 @@
 </head>
 <body>
 
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/home/mainPage">BookLand</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/home/mainPage">BookLand</a>
+                <ul class="nav navbar-nav">
+                    <li><a href="${pageContext.request.contextPath}/home/mainPage">Home</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <security:authorize access="hasRole('ADMIN')">
+                        <li><a href="${pageContext.request.contextPath}/order/orders">Orders</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/list">Users</a></li>
+                    </security:authorize>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <security:authorize access="hasRole('USER')">
+                        <li><a href="${pageContext.request.contextPath}/user/userDetail"><span
+                                class="glyphicon glyphicon-user"></span> Your Account</a></li>
+                        <li><a href="${pageContext.request.contextPath}/cart/"><span
+                                class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+                    </security:authorize>
+
+                    <security:authorize access="!hasAnyRole('USER', 'ADMIN')">
+                        <li><a href="${pageContext.request.contextPath}/login/showMyLoginPage"><span
+                                class="glyphicon glyphicon-user"></span> Login</a></li>
+                    </security:authorize>
+
+                    <security:authorize access="hasAnyRole('USER', 'ADMIN')">
+                        <li><a href="#">
+                            <form:form action="${pageContext.request.contextPath}/logout" method="post">
+                                <input type="submit" value="Logout"/>
+                            </form:form>
+                        </a></li>
+                    </security:authorize>
+
+                </ul>
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Contact</a></li>
-                <security:authorize access="hasRole('ADMIN')">
-                    <li><a href="#">Orders</a></li>
-                    <li><a href="${pageContext.request.contextPath}/admin/list">Users</a></li>
-                </security:authorize>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <security:authorize access="hasRole('USER')">
-                    <li><a href="${pageContext.request.contextPath}/user/userDetail"><span
-                            class="glyphicon glyphicon-user"></span> Your Account</a></li>
-                    <li><a href="${pageContext.request.contextPath}/cart/"><span
-                            class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-                </security:authorize>
-                <security:authorize access="!hasAnyRole('USER', 'ADMIN')">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Login</a></li>
-                </security:authorize>
-                <security:authorize access="hasAnyRole('USER', 'ADMIN')">
-                    <li><a href="#">
-                        <form:form action="${pageContext.request.contextPath}/logout" method="post">
-                            <input type="submit" value="Logout"/>
-                        </form:form>
-                    </a></li>
-                </security:authorize>
+    </nav>
+</header>
 
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<br><br>
+<hr>
 
 <c:forEach var="i" begin="1" end="100">
     <c:url var="pageNumber" value="/home/mainPage">
@@ -100,16 +107,19 @@
                 <c:param name="bookId" value="${tempBook.id}"/>*
             </c:url>
 
-
-            <div class="col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Title : ${tempBook.authors}</div>
-                    <div class="panel-body"><img src="${tempBook.smallImageUrl}" class="img-responsive" alt="Image">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><p>${tempBook.authors}</p></div>
+                    <div class="panel-body">
+                        <span class="align-middle">${tempBook.title}</span>
+                        <p>Rating : ${tempBook.avarageRating}</p>
+                        <p>Cover : <img src="${tempBook.smallImageUrl}" alt="cover"/></p>
                     </div>
-                    <div class="panel-footer">Price : ${tempBook.price} Details : <a href="${detailLink}">INFO</a></div>
+
+                    <div class="panel-footer">Price : ${tempBook.price} $ <a href="${detailLink}" role="button"
+                                                                             class="btn btn-info">INFO</a></div>
                 </div>
             </div>
-
 
         </c:forEach>
     </div>

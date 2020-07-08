@@ -33,7 +33,7 @@
         <div style="padding-top: 30px" class="panel-body">
 
             <!-- Order Form -->
-        <form:form action="${pageContext.request.contextPath}/User/saveUserInfoForm" modelAttribute="userInfoForm" method="post">
+        <form:form action="${pageContext.request.contextPath}/user/saveUserInfoForm" modelAttribute="userInfoForm" method="post">
 
             <table>
                 <tbody>

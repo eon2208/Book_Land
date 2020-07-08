@@ -79,9 +79,15 @@ public class UserController {
         User user = userService.findByUserName(authentication.getName());
 
         List<Order> orderList = orderService.getOrdersByUserId(user.getId());
-        model.addAttribute("orderHistory", orderList);
+        if(orderList != null){
+            model.addAttribute("orderHistory", orderList);
+            return "order/order-history";
+        }
+        else {
+            model.addAttribute("cartAlert", true);
+        }
+        return "redirect:/user/userDetail";
 
-        return "order/order-history";
     }
 
     @GetMapping("historyDetail")
@@ -91,6 +97,11 @@ public class UserController {
 
         model.addAttribute("orderedBooks", orderedBooks);
         return "order/order-info";
+    }
+
+    @GetMapping("accessDenied")
+    public String showAccessDeniedSite() {
+        return "/user/access-denied";
     }
 
 }

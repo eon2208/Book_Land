@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
         java.sql.Time time = new java.sql.Time(Calendar.getInstance().getTime().getTime());
 
         Order order = new Order();
-        
+
         order.setDate(time);
         order.setStatus(1);
         order.setUser(user);
@@ -76,6 +76,11 @@ public class OrderServiceImpl implements OrderService {
     public OrderedBooks getOrderedBooksByOrderId(int orderId) {
 
         return orderedBooksDao.getOrderedBooksByOrderId(orderId);
+    }
+
+    @Override
+    public List<Order> getOrders() {
+        return orderDao.getOrders();
     }
 
 

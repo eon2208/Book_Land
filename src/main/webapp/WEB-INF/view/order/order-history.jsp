@@ -24,7 +24,7 @@ ${orderHistory.value}
         <c:when test="${orderHistory.status == 3}">Completed</c:when>
     </c:choose>
 
-<form:form action="${pageContext.request.contextPath}/User/historyDetail" method="get">
+<form:form action="${pageContext.request.contextPath}/user/historyDetail" method="get">
     <input type="hidden" value="${orderHistory.id}" name="orderId">
     <input type="submit" value="More Info" class="add-button">
 </form:form>

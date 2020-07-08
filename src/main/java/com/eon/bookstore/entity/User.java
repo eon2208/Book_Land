@@ -37,12 +37,12 @@ public class User {
 
 	@OneToMany(fetch = FetchType.LAZY,
 			mappedBy = "user",
-			cascade = {CascadeType.DETACH, CascadeType.MERGE,
-					CascadeType.PERSIST, CascadeType.REFRESH})
+			cascade = CascadeType.ALL)
 	private List<Order> order;
 
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name = "users_roles", 
 	joinColumns = @JoinColumn(name = "user_id"), 
 	inverseJoinColumns = @JoinColumn(name = "role_id"))

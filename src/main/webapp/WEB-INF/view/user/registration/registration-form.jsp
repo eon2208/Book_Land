@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <!doctype html>
 <html lang="en">
@@ -28,6 +29,11 @@
 </head>
 
 <body>
+
+<c:url var="back" value="/login/showMyLoginPage"/>
+<security:authorize access="hasRole('ADMIN')">
+    <c:url var="back" value="/admin/list"/>
+</security:authorize>
 
 <div>
 
@@ -111,14 +117,16 @@
                         <form:input path="email" placeholder="email (*)" class="form-control"/>
                     </div>
 
-
                     <!-- Register Button -->
                     <div style="margin-top: 10px" class="form-group">
                         <div class="col-sm-6 controls">
                             <button type="submit" class="btn btn-primary">Register</button>
                             <hr>
-                            <a href="${pageContext.request.contextPath}/login/showMyLoginPage">
-                                <button type="button" class="btn btn-primary">Go Back</button></a>
+                                <%--Admin statment--%>
+
+                            <a href="${back}">
+                                <button type="button" class="btn btn-primary">Go Back</button>
+                            </a>
                         </div>
                     </div>
 

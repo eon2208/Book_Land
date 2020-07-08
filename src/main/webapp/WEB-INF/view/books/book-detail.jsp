@@ -16,8 +16,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/bookHandling.js"></script>
 <div>
 
-    <c:url var="add" value="/cart/addToCart"/>
-
     ${book.authors}
     ${book.title}
     ${book.price}

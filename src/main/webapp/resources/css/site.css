@@ -18,3 +18,26 @@ footer {
 .img-responsive{
     width: 25%;
 }
+
+/* User Details Form*/
+.tital
+{ font-size:16px; font-weight:500;}
+.bot-border{
+    border-bottom:1px #f8f8f8 solid;
+    margin:5px 0  5px 0;
+}
+
+/*Home Page*/
+.panel{
+    width: 60%;
+    height: auto;
+}
+
+.panel img{
+    height: auto;
+    position:center ;
+}
+
+.panel-body{
+
+}

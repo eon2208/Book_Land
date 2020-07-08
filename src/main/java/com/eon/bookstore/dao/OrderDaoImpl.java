@@ -1,5 +1,6 @@
 package com.eon.bookstore.dao;
 
+import com.eon.bookstore.entity.Books;
 import com.eon.bookstore.entity.Order;
 import com.eon.bookstore.entity.Order;
 import com.eon.bookstore.entity.TotalBasket;
@@ -62,6 +63,18 @@ public class OrderDaoImpl implements OrderDao {
             order = null;
         }
         return order;
+    }
+
+    @Override
+    public List<Order> getOrders() {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Query<Order> theQuery = session.createQuery("from Order order by date", Order.class);
+
+        List<Order> orderList = theQuery.getResultList();
+
+        return orderList;
     }
 
 

@@ -34,7 +34,8 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
         // Spring Security configuration
         http.authorizeRequests()
                 .antMatchers("/home/mainPage").permitAll()
-                .antMatchers("/service/**").hasRole("MANAGER")
+                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login/showMyLoginPage")
@@ -44,7 +45,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/access-denied");
+                .exceptionHandling().accessDeniedPage("/user/accessDenied");
     }
 
     // bcrypt

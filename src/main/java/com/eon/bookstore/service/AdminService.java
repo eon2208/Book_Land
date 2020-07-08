@@ -11,6 +11,6 @@ public interface AdminService {
 
     User getUserByUserId(long userId);
 
-    void deleteUser(long userId);
+    void deleteUser(String userName);
 
 }

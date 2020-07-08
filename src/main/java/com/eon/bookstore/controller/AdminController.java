@@ -1,8 +1,10 @@
 package com.eon.bookstore.controller;
 
+import com.eon.bookstore.entity.Order;
 import com.eon.bookstore.entity.User;
 import com.eon.bookstore.service.AdminService;
 import com.eon.bookstore.service.BookService;
+import com.eon.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +18,17 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
+    // Basic CRUD options
+
     // Spring field injections
     @Autowired
     private AdminService adminService;
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private OrderService orderService;
 
     // mapping for listing Users
     @GetMapping("/list")
@@ -36,10 +43,14 @@ public class AdminController {
 
     // mapping for deleting users
     @GetMapping("deleteUser")
-    public String deleteUser(@RequestParam("userId") long userId, Model model) {
+    public String deleteUser(@RequestParam("userName") String userName, Model model) {
+
+        adminService.deleteUser(userName);
 
         return "redirect:/admin/list";
     }
+
+
 
     // delete a book
     @GetMapping("/delete")
@@ -49,8 +60,6 @@ public class AdminController {
 
         return "redirect:/home/mainPage";
     }
-
-    // mapping for listing info for users
 
     // listing all orders
         // changing status of order for user

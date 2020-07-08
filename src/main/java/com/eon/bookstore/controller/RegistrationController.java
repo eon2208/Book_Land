@@ -33,7 +33,7 @@ public class RegistrationController {
 
         model.addAttribute("member",new Member());
 
-        return "user/registration-form";
+        return "user/registration/registration-form";
     }
 
     @PostMapping("/processRegistrationForm")
@@ -41,7 +41,7 @@ public class RegistrationController {
 
         // form validation
         if (bindingResult.hasErrors()) {
-            return "user/registration-form";
+            return "user/registration/registration-form";
         }
 
         // check if username exists
@@ -50,7 +50,7 @@ public class RegistrationController {
             model.addAttribute("member", new Member());
             model.addAttribute("registrationError", "User name already exists");
 
-            return "user/registration-form";
+            return "user/registration/registration-form";
         }
 
         // save user
@@ -59,6 +59,6 @@ public class RegistrationController {
         // send massage about successful registration
         model.addAttribute("registrationSuccessful", "Registration Successful");
 
-        return "user/registration-form";
+        return "user/registration/registration-form";
     }
 }

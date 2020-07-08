@@ -14,15 +14,6 @@
 <body>
 <h3>Congratulations, Your order is completed</h3>
 
-
-<%--disable backward option--%>
-<%
-    response.setHeader("Pragma","no-cache");
-    response.setHeader("Cache-Control","no-store");
-    response.setHeader("Expires","0");
-    response.setDateHeader("Expires",-1);
-%>
-
 <br>
 <a href="${pageContext.request.contextPath}/home/mainPage">Home</a>
 <br>

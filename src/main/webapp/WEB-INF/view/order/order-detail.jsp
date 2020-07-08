@@ -95,19 +95,12 @@
 </div>
 
 <div>
-    <a href="${pageContext.request.contextPath}/User/showUserInfoForm" class="btn btn-primary" role="button" aria-pressed="true">Edit User Info</a>
+    <a href="${pageContext.request.contextPath}/user/showUserInfoForm" class="btn btn-primary" role="button" aria-pressed="true">Edit User Info</a>
 </div>
 <div>
-    <a href="${pageContext.request.contextPath}/order/confirm" class="btn btn-primary" role="button" aria-pressed="true" onclick="orderSuccess()">Confirm Order</a>
+    <a href="${pageContext.request.contextPath}/order/confirm" class="btn btn-primary" role="button" aria-pressed="true">Confirm Order</a>
 </div>
 
 </body>
 
-<script>
-    $(document).ready(function() {
-        function disablePrev() { window.history.forward() }
-        window.onload = disablePrev();
-        window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
-    });
-</script>
 </html>
