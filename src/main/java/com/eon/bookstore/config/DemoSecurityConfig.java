@@ -24,13 +24,14 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth)  {
         auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        // Spring Security configuration
         http.authorizeRequests()
                 .antMatchers("/home/mainPage").permitAll()
                 .antMatchers("/service/**").hasRole("MANAGER")

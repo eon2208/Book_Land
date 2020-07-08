@@ -21,7 +21,7 @@
 <h2>Check your order before Confirmation</h2>
 
 <c:if test="${user.address.id == 1}">
-    <c:redirect url="/User/showUserInfoForm"/>
+    <c:redirect url="/user/showUserInfoForm"/>
 </c:if>
 
 <div style="margin-bottom: 25px" class="input-group">

@@ -32,8 +32,7 @@ public class OrderServiceImpl implements OrderService {
         java.sql.Time time = new java.sql.Time(Calendar.getInstance().getTime().getTime());
 
         Order order = new Order();
-
-        order.setAddressID(user.getAddress().getId());
+        
         order.setDate(time);
         order.setStatus(1);
         order.setUser(user);

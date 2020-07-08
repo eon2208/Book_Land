@@ -33,7 +33,7 @@ public class CartController {
         model.addAttribute("basket", basket);
         model.addAttribute("totalBasket", totalBasketList);
 
-        return "cart";
+        return "books/cart";
     }
 
     @GetMapping("/addToCart")

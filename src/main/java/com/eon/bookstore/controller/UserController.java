@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/User")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class UserController {
         User user = userService.findByUserName(userName);
         model.addAttribute("user", user);
 
-        return "user-detail";
+        return "user/user-detail";
     }
 
     @GetMapping("/showUserInfoForm")
@@ -55,7 +55,7 @@ public class UserController {
 
         model.addAttribute("userInfoForm", userInfoForm);
 
-        return "userInfo-form";
+        return "user/userInfo-form";
     }
 
     @PostMapping("/saveUserInfoForm")
@@ -63,14 +63,14 @@ public class UserController {
 
         // form validation
         if (bindingResult.hasErrors()) {
-            return "userInfo-form";
+            return "user/userInfo-form";
         }
 
         String userName = authentication.getName();
 
         userService.saveUserInfoForm(userInfoForm, userName);
 
-        return "redirect:/User/showUserInfoForm";
+        return "redirect:/user/showUserInfoForm";
     }
 
     @GetMapping("showHistory")
@@ -81,7 +81,7 @@ public class UserController {
         List<Order> orderList = orderService.getOrdersByUserId(user.getId());
         model.addAttribute("orderHistory", orderList);
 
-        return "order-history";
+        return "order/order-history";
     }
 
     @GetMapping("historyDetail")
@@ -90,6 +90,7 @@ public class UserController {
         List<OrderedBooks> orderedBooks = orderService.getListOrderedBooksByOrderId(orderId);
 
         model.addAttribute("orderedBooks", orderedBooks);
-        return "order-info";
+        return "order/order-info";
     }
+
 }

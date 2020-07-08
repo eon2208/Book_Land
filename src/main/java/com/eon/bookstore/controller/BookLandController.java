@@ -2,29 +2,22 @@ package com.eon.bookstore.controller;
 
 import com.eon.bookstore.entity.Basket;
 import com.eon.bookstore.entity.Books;
-import com.eon.bookstore.entity.TotalBasket;
-import com.eon.bookstore.entity.User;
-import com.eon.bookstore.model.TotalBasketModel;
 import com.eon.bookstore.service.BookService;
 import com.eon.bookstore.service.BasketService;
 import com.eon.bookstore.service.UserService;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Base64;
 import java.util.List;
 
 @Controller
 @RequestMapping("/home")
 public class BookLandController {
 
+    // Spring field injections
     @Autowired
     private BookService bookService;
 
@@ -34,6 +27,7 @@ public class BookLandController {
     @Autowired
     private UserService userService;
 
+    // main page Controller
     @GetMapping("/mainPage")
     public String showHomePage(Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page, Authentication authentication) {
 
@@ -48,17 +42,11 @@ public class BookLandController {
             basket = null;
         }
 
-        return "home";
+        return "books/home";
     }
 
-    @GetMapping("/delete")
-    public String delete(@RequestParam("bookId") int id) {
 
-        bookService.deleteBook(id);
-
-        return "redirect:/home/mainPage";
-    }
-
+    // searching books
     @GetMapping("/search")
     public String searchBook(@RequestParam("search") String search, Model model) {
 
@@ -68,9 +56,10 @@ public class BookLandController {
         // add books to model
         model.addAttribute("books", booksList);
 
-        return "home";
+        return "books/home";
     }
 
+    // details of book
     @GetMapping("/details")
     public String showBook(@RequestParam("bookId") int bookId, Model model) {
 
@@ -79,7 +68,7 @@ public class BookLandController {
 
         model.addAttribute("book", book);
 
-        return "book-detail";
+        return "books/book-detail";
     }
 
 }

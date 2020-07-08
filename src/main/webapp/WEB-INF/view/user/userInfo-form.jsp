@@ -95,7 +95,7 @@
 
                 <tr>
                     <td><label></label></td>
-                    <td><a href="${pageContext.request.contextPath}/cart/">Back to Cart</td>
+                    <td><a href="${pageContext.request.contextPath}/cart/">Back to Cart</a></td>
                 </tr>
 
                 </tbody>

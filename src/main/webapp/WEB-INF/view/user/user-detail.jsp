@@ -15,11 +15,13 @@
 
 <c:if test="${user.address.id != 1}">
 <table>
+    <tr>
     <th>Name : </th>
     <th>Last Name : </th>
     <th>Phone Number : </th>
     <th>Email : </th>
     <th>Country : </th>
+    </tr>
 
     <tr>
     <td>${user.firstName}</td>
@@ -33,11 +35,11 @@
 </c:if>
 
 
-<a href="${pageContext.request.contextPath}/User/showUserInfoForm">User Info</a>
+<a href="${pageContext.request.contextPath}/user/showUserInfoForm">User Info</a>
 <br>
 <a href="${pageContext.request.contextPath}/home/mainPage">Back</a>
 <br>
-<a href="${pageContext.request.contextPath}/User/showHistory">Order history</a>
+<a href="${pageContext.request.contextPath}/user/showHistory">Order history</a>
 
 
 </body>

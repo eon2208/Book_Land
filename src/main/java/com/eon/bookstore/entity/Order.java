@@ -17,9 +17,6 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "address_id")
-    private int addressID;
-
     @Column(name = "value")
     private double value;
 
@@ -32,9 +29,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(User user, int addressID, double value, Date date, int status) {
+    public Order(User user, double value, Date date, int status) {
         this.user = user;
-        this.addressID = addressID;
         this.value = value;
         this.date = date;
         this.status = status;
@@ -54,14 +50,6 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public int getAddressID() {
-        return addressID;
-    }
-
-    public void setAddressID(int addressID) {
-        this.addressID = addressID;
     }
 
     public double getValue() {
@@ -93,7 +81,6 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", user=" + user +
-                ", addressID='" + addressID + '\'' +
                 ", value=" + value +
                 ", date=" + date +
                 '}';

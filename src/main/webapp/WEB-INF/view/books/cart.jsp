@@ -18,12 +18,13 @@
     <c:forEach var="totalBasket" items="${totalBasket}">
 
         <table>
-            <th>Title :</th>
-            <th></th>
-            <th>Quantity :</th>
-            <th></th>
-            <th></th>
-
+            <tr>
+                <th>Title :</th>
+                <th></th>
+                <th>Quantity :</th>
+                <th></th>
+                <th></th>
+            </tr>
 
             <tr>
                 <td>${totalBasket.books.title}</td>

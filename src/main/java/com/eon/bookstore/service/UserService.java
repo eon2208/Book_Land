@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
+// userDetailService for Spring Security
 public interface UserService extends UserDetailsService {
 
     List<User> getUserList();

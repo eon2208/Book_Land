@@ -3,20 +3,15 @@ package com.eon.bookstore.controller;
 import com.eon.bookstore.entity.Basket;
 import com.eon.bookstore.entity.TotalBasket;
 import com.eon.bookstore.entity.User;
-import com.eon.bookstore.model.UserInfoForm;
 import com.eon.bookstore.service.BasketService;
 import com.eon.bookstore.service.OrderService;
 import com.eon.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -43,7 +38,7 @@ public class OrderController {
         model.addAttribute("totalBasket", totalBasketList);
         model.addAttribute("user", user);
 
-        return "order-detail";
+        return "order/order-detail";
     }
 
     @GetMapping("/confirm")
@@ -56,7 +51,7 @@ public class OrderController {
         orderService.saveOrder(totalBasket, basket, user);
 
 
-        return "order-confirmation";
+        return "order/order-confirmation";
     }
 
 
