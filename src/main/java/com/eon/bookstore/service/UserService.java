@@ -1,13 +1,17 @@
 package com.eon.bookstore.service;
 
 import com.eon.bookstore.entity.Address;
+import com.eon.bookstore.entity.PasswordResetToken;
 import com.eon.bookstore.entity.User;
 import com.eon.bookstore.model.OrderDetail;
 import com.eon.bookstore.model.UserInfoForm;
 import com.eon.bookstore.model.Member;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 // userDetailService for Spring Security
 public interface UserService extends UserDetailsService {
@@ -29,4 +33,7 @@ public interface UserService extends UserDetailsService {
     void saveUserInfoForm(UserInfoForm userInfoForm, String userName);
 
     UserInfoForm userInfoFormModel(String userName);
+
+    User findUserByEmail(String userEmail);
+
 }

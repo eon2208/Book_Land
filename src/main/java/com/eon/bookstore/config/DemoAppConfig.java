@@ -8,10 +8,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.eon.bookstore")
 @PropertySource("classpath:persistence-mysql.properties")
+@PropertySource("classpath:mailSender.properties")
 public class DemoAppConfig implements WebMvcConfigurer {
 
     // Variable holing properties
@@ -123,6 +124,24 @@ public class DemoAppConfig implements WebMvcConfigurer {
         txManager.setSessionFactory(sessionFactory);
 
         return txManager;
+    }
+
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("myserverdemo123@gmail.com");
+        mailSender.setPassword("?[S}w)qNv6[;2yKF");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.setProperty("mail.transport.protocol", environment.getProperty("mail.transport.protocol"));
+        props.setProperty("mail.smtp.auth", environment.getProperty("mail.smtp.auth"));
+        props.setProperty("mail.smtp.starttls.enable", environment.getProperty("mail.smtp.starttls.enable"));
+        props.setProperty("mail.debug", environment.getProperty("mail.debug"));
+
+        return mailSender;
     }
 
     @Override

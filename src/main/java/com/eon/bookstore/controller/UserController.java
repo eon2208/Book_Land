@@ -3,11 +3,16 @@ package com.eon.bookstore.controller;
 import com.eon.bookstore.entity.Order;
 import com.eon.bookstore.entity.OrderedBooks;
 import com.eon.bookstore.entity.User;
+import com.eon.bookstore.model.GenericResponse;
+import com.eon.bookstore.model.PasswordDto;
 import com.eon.bookstore.service.OrderService;
 import com.eon.bookstore.service.UserService;
 import com.eon.bookstore.model.UserInfoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.http.HttpRequest;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +20,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.Message;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/user")
@@ -27,6 +38,12 @@ public class UserController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private MailSender mailSender;
+
+    // Diagnostic Logger
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -73,7 +90,7 @@ public class UserController {
         return "redirect:/user/showUserInfoForm";
     }
 
-    @GetMapping("showHistory")
+    @GetMapping("/showHistory")
     public String showOrderHistory(Authentication authentication, Model model) {
 
         User user = userService.findByUserName(authentication.getName());
@@ -90,7 +107,7 @@ public class UserController {
 
     }
 
-    @GetMapping("historyDetail")
+    @GetMapping("/historyDetail")
     public String showOrderInfo(@RequestParam("orderId") int orderId, Model model) {
 
         List<OrderedBooks> orderedBooks = orderService.getListOrderedBooksByOrderId(orderId);
@@ -103,5 +120,32 @@ public class UserController {
     public String showAccessDeniedSite() {
         return "/user/access-denied";
     }
+
+    @GetMapping("/emailForm")
+    public String showEmailForm(){
+
+        return "email/forgot-password";
+    }
+
+
+    /*
+
+    @PostMapping("/savePassword")
+    public String savePassword(Model model, @Valid PasswordDto passwordDto) {
+
+        String result = userService.validatePasswordResetToken(passwordDto.getToken());
+
+        if(result != null) {
+            model.addAttribute("info", "Success");
+        }
+
+        Optional user = userService.getUserByPasswordResetToken(passwordDto.getToken());
+        if(user.isPresent()) {
+            userService.changeUserPassword(user.get(), passwordDto.getNewPassword());
+        }
+        else{
+
+        }
+    }*/
 
 }

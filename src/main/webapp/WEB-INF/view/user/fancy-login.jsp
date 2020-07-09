@@ -88,10 +88,15 @@
 						</div>
 					</form:form>
 
+
 				</div>
 				
 			</div>
 
+			<div >
+				<a href="${pageContext.request.contextPath}/email/emailForm" class="btn btn-primary" role="button" aria-pressed="true">Forgot password</a>
+		</div>
+			<br>
 			<div>
 				<a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary" role="button" aria-pressed="true">Register New User</a>
 			</div>

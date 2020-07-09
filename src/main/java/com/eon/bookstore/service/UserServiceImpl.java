@@ -4,11 +4,13 @@ import com.eon.bookstore.dao.AddressDao;
 import com.eon.bookstore.dao.RoleDao;
 import com.eon.bookstore.dao.UserDao;
 import com.eon.bookstore.entity.Address;
+import com.eon.bookstore.entity.PasswordResetToken;
 import com.eon.bookstore.entity.Role;
 import com.eon.bookstore.entity.User;
 import com.eon.bookstore.model.UserInfoForm;
 import com.eon.bookstore.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -152,6 +152,13 @@ public class UserServiceImpl implements UserService {
 
         return userInfoForm;
     }
+
+    @Override
+    public User findUserByEmail(String userEmail) {
+        return userDao.findUserByEmail(userEmail);
+    }
+
+
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

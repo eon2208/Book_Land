@@ -19,10 +19,12 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByUserName(String userName) {
 
+        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
+        // create query
         Query<User> theQuery = currentSession.createQuery("from User where userName=:uName", User.class);
-        theQuery.setParameter("uName",userName);
+        theQuery.setParameter("uName", userName);
         User user = null;
 
         try {
@@ -30,18 +32,23 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             user = null;
         }
+        // return got user
         return user;
     }
 
     @Override
     public List<User> getUsersList() {
 
+        // get current hibernate session
         Session session = sessionFactory.getCurrentSession();
 
+        // create query for listing users in specific order
         Query<User> query = session.createQuery("from User order by lastName", User.class);
 
+        // get users list
         List<User> userList = query.getResultList();
 
+        // return user list
         return userList;
     }
 
@@ -58,8 +65,8 @@ public class UserDaoImpl implements UserDao {
         Session currentSession = sessionFactory.getCurrentSession();
 
         Query query = currentSession.createQuery("update User set basketId =: basketId where userName =:uName");
-        query.setParameter("uName",user.getUserName());
-        query.setParameter("basketId",user.getBasketId());
+        query.setParameter("uName", user.getUserName());
+        query.setParameter("basketId", user.getBasketId());
         query.executeUpdate();
 
     }
@@ -71,4 +78,25 @@ public class UserDaoImpl implements UserDao {
         currentSession.delete(user);
     }
 
+    @Override
+    public User findUserByEmail(String userEmail) {
+
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        // create query
+        Query<User> theQuery = currentSession.createQuery("from User where email=:uEmail", User.class);
+        theQuery.setParameter("uEmail", userEmail);
+        User user = null;
+
+        try {
+            user = theQuery.getSingleResult();
+        } catch (Exception e) {
+            user = null;
+        }
+        // return got user
+        return user;
+    }
+
 }
+
