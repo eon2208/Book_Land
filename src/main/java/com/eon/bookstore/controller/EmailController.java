@@ -1,27 +1,22 @@
 package com.eon.bookstore.controller;
 
-import com.eon.bookstore.entity.PasswordResetToken;
 import com.eon.bookstore.entity.User;
+import com.eon.bookstore.model.Member;
+import com.eon.bookstore.model.PasswordModel;
 import com.eon.bookstore.service.TokenService;
 import com.eon.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamSource;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.validation.Valid;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -38,11 +33,19 @@ public class EmailController {
     @Autowired
     private UserService userService;
 
+    // deleting WhiteSpaces
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
+
     // Diagnostic Logger
     private Logger logger = Logger.getLogger(getClass().getName());
 
     @GetMapping("/emailForm")
-    public String showEmailForm(){
+    public String showEmailForm() {
 
         return "email/forgot-password";
     }
@@ -51,23 +54,68 @@ public class EmailController {
     public String resetPassword(Model model, @RequestParam("email") String userEmail, HttpServletRequest request) {
 
         User user = userService.findUserByEmail(userEmail);
-        logger.info("user found");
 
         if (user == null) {
-            model.addAttribute("exception", "Email not found");
-            return "redirect:/email/error";
+            model.addAttribute("infoError", "Email not found");
+            return "email/forgot-password";
         }
+
 
         String token = UUID.randomUUID().toString();
         System.out.println(token);
         tokenService.createPasswordResetTokenForUser(user, token);
 
-        mailSender.send(tokenService.constructResetTokenEmail(request.getRequestURI(),
+        mailSender.send(tokenService.constructResetTokenEmail(request.getContextPath(),
                 request.getLocale(), token, user));
 
         logger.info("email sent");
 
-        return "redirect:/login/showMyLoginPage";
+        model.addAttribute("info","Email sent");
+        return "email/forgot-password";
+    }
+
+    @GetMapping("/changePassword")
+    public String showChangePasswordPage(Model model, @RequestParam("token") String token) {
+
+        logger.info(token);
+        String result = tokenService.validatePasswordResetToken(token);
+        logger.info(result);
+        if (result != null) {
+            return "redirect:/login/showMyLoginPage";
+
+        } else {
+            model.addAttribute("token", token);
+            model.addAttribute("passwordModel", new PasswordModel());
+            return "email/updatePassword";
+        }
+    }
+
+    @PostMapping("/savePassword")
+    public String savePassword(@RequestParam("token") String token,
+                               @Valid @ModelAttribute("passwordModel") PasswordModel passwordModel,
+                               BindingResult bindingResult, Model model) {
+
+        // form validation
+        if (bindingResult.hasErrors()) {
+            return "email/updatePassword";
+        }
+
+        String result = tokenService.validatePasswordResetToken(token);
+        if (result != null) {
+            model.addAttribute("info", "Error");
+            return "user/fancy-login";
+        }
+
+        // check if username exists
+        User user = userService.getUserByPasswordResetToken(token);
+
+        // change password
+        userService.changeUserPassword(user, passwordModel.getPassword());
+
+        // send massage about successful password change
+        model.addAttribute("info", "Password Reset completed");
+
+        return "user/fancy-login";
     }
 
 }

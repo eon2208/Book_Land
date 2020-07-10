@@ -48,7 +48,7 @@ public class RegistrationController {
         User user = userService.findByUserName(member.getUserName());
         if (user != null) {
             model.addAttribute("member", new Member());
-            model.addAttribute("registrationError", "User name already exists");
+            model.addAttribute("infoError", "User name already exists");
 
             return "user/registration/registration-form";
         }
@@ -57,7 +57,7 @@ public class RegistrationController {
         userService.save(member);
 
         // send massage about successful registration
-        model.addAttribute("registrationSuccessful", "Registration Successful");
+        model.addAttribute("info", "Registration Successful");
 
         return "user/registration/registration-form";
     }

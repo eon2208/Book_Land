@@ -3,16 +3,12 @@ package com.eon.bookstore.controller;
 import com.eon.bookstore.entity.Order;
 import com.eon.bookstore.entity.OrderedBooks;
 import com.eon.bookstore.entity.User;
-import com.eon.bookstore.model.GenericResponse;
-import com.eon.bookstore.model.PasswordDto;
 import com.eon.bookstore.service.OrderService;
 import com.eon.bookstore.service.UserService;
 import com.eon.bookstore.model.UserInfoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.http.HttpRequest;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.Message;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 @Controller

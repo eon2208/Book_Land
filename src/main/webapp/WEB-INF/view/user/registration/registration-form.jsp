@@ -59,15 +59,15 @@
                             <div>
 
                                 <!-- Check for registration error -->
-                                <c:if test="${registrationError != null}">
+                                <c:if test="${infoError != null}">
                                     <div class="alert alert-danger col-xs-offset-1 col-xs-10">
-                                            ${registrationError}
+                                            ${infoError}
                                     </div>
                                 </c:if>
 
-                                <c:if test="${registrationSuccessful != null}">
-                                    <div class="alert alert-danger col-xs-offset-1 col-xs-10">
-                                            ${registrationSuccessful}
+                                <c:if test="${info != null}">
+                                    <div class="alert alert-primary col-xs-offset-1 col-xs-10">
+                                            ${info}
                                     </div>
                                 </c:if>
 

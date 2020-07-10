@@ -63,6 +63,18 @@
 										</div>
 								    
 									</c:if>
+
+									<c:if test="${infoError != null}">
+										<div class="alert alert-danger col-xs-offset-1 col-xs-10">
+												${infoError}
+										</div>
+									</c:if>
+
+									<c:if test="${info != null}">
+										<div class="alert alert-primary col-xs-offset-1 col-xs-10">
+												${info}
+										</div>
+									</c:if>
 									
 					            </div>
 					        </div>

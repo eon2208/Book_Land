@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserService {
     private BasketService basketService;
 
     @Autowired
+    private TokenService tokenService;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -55,6 +58,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Address getAddressById(int addressId) {
         return addressDao.getAddressById(addressId);
+    }
+
+    @Override
+    public User getUserById(long id) {
+        return userDao.getUserById(id);
     }
 
     @Override
@@ -158,6 +166,20 @@ public class UserServiceImpl implements UserService {
         return userDao.findUserByEmail(userEmail);
     }
 
+    @Override
+    public void changeUserPassword(User user, String password) {
+        user.setPassword(passwordEncoder.encode(password));
+
+        userDao.save(user);
+    }
+
+    @Override
+    public User getUserByPasswordResetToken(String token) {
+
+        User user = userDao.getUserById(tokenService.findByToken(token).getUser().getId());
+
+        return user;
+    }
 
 
     @Override

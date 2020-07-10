@@ -22,6 +22,8 @@ public interface UserService extends UserDetailsService {
 
     Address getAddressById(int addressId);
 
+    User getUserById(long id);
+
     void saveAddress(UserInfoForm userInfoForm, User user);
 
     void save(Member member);
@@ -35,5 +37,9 @@ public interface UserService extends UserDetailsService {
     UserInfoForm userInfoFormModel(String userName);
 
     User findUserByEmail(String userEmail);
+
+    User getUserByPasswordResetToken(String token);
+
+    void changeUserPassword(User user, String Password);
 
 }

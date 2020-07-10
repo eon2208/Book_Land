@@ -62,8 +62,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void saveBasketId(User user) {
 
+        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
+        // create query for basket save
         Query query = currentSession.createQuery("update User set basketId =: basketId where userName =:uName");
         query.setParameter("uName", user.getUserName());
         query.setParameter("basketId", user.getBasketId());
@@ -73,8 +75,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(User user) {
+
+        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
+        // execute statement
         currentSession.delete(user);
     }
 
@@ -95,6 +100,19 @@ public class UserDaoImpl implements UserDao {
             user = null;
         }
         // return got user
+        return user;
+    }
+
+    @Override
+    public User getUserById(long id) {
+
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        // create ask for user
+        User user = currentSession.get(User.class, id);
+
+        // Return user
         return user;
     }
 

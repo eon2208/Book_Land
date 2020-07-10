@@ -9,10 +9,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class TokenServiceImpl implements TokenService {
 
     @Autowired
@@ -24,6 +28,8 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public void createPasswordResetTokenForUser(User user, String token) {
 
+        deleteForUserId(user.getId());
+
         // create new object
         PasswordResetToken passwordResetToken = new PasswordResetToken();
 
@@ -34,29 +40,29 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public void changeUserPassword(Object o, String newPassword) {
-
-    }
-
-    @Override
-    public Optional getUserByPasswordResetToken(String token) {
-        return Optional.empty();
-    }
-
-    @Override
     public String validatePasswordResetToken(String token) {
-        return null;
+
+        final PasswordResetToken passToken = passwordResetTokenDao.findByToken(token);
+
+        return !isTokenFound(passToken) ? "invalidToken" : isTokenExpired(passToken) ? "expired" : null;
     }
 
     @Override
-    public PasswordResetToken getPasswordResetTokenByUserName(String userName) {
-        return passwordResetTokenDao.getPasswordResetTokenByUserName(userName);
+    public boolean isTokenFound(PasswordResetToken passToken) {
+        return passToken != null;
     }
+
+    @Override
+    public boolean isTokenExpired(PasswordResetToken passToken) {
+        final Calendar cal = Calendar.getInstance();
+        return passToken.getExpiryDate().before(cal.getTime());
+    }
+
 
     @Override
     public SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
-        String url = contextPath + "/user/changePassword?token=" + token;
-        return constructEmail("Reset Password",url, user);
+        String url = contextPath + "/email/changePassword?token=" + token;
+        return constructEmail("Reset Password","http://localhost:8080" + url, user);
     }
 
     @Override
@@ -68,4 +74,25 @@ public class TokenServiceImpl implements TokenService {
         email.setFrom("Book_Land");
         return email;
     }
+
+    @Override
+    public PasswordResetToken findByToken(String token) {
+        return passwordResetTokenDao.findByToken(token);
+    }
+
+    @Override
+    public void deleteForUserId(long id) {
+
+        List<PasswordResetToken> passwordResetTokenList = passwordResetTokenDao.getListForUserId(id);
+
+        try {
+            for (PasswordResetToken passwordResetToken : passwordResetTokenList) {
+                passwordResetTokenDao.deletePasswordResetToken(passwordResetToken);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex   );
+        }
+    }
+
+
 }
