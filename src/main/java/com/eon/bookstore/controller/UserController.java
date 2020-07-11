@@ -118,25 +118,4 @@ public class UserController {
         return "email/forgot-password";
     }
 
-
-    /*
-
-    @PostMapping("/savePassword")
-    public String savePassword(Model model, @Valid PasswordDto passwordDto) {
-
-        String result = userService.validatePasswordResetToken(passwordDto.getToken());
-
-        if(result != null) {
-            model.addAttribute("info", "Success");
-        }
-
-        Optional user = userService.getUserByPasswordResetToken(passwordDto.getToken());
-        if(user.isPresent()) {
-            userService.changeUserPassword(user.get(), passwordDto.getNewPassword());
-        }
-        else{
-
-        }
-    }*/
-
 }

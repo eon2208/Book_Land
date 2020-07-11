@@ -26,4 +26,6 @@ public interface BasketService {
     void deleteTotalBasketById(int id);
 
     void deleteBasketById(String basketId);
+
+    void deleteTotalBasketByBasketId(String basketId);
 }

@@ -107,5 +107,10 @@ public class BasketServiceImpl implements BasketService {
         basketDao.deleteBasketById(basketId);
     }
 
+    @Override
+    public void deleteTotalBasketByBasketId(String basketId) {
+        totalBasketDao.deleteTotalBasketByBasketId(basketId);
+    }
+
 
 }

@@ -39,7 +39,7 @@
                     <li><a href="${pageContext.request.contextPath}/home/mainPage">Home</a></li>
                     <li><a href="#">Contact</a></li>
                     <security:authorize access="hasRole('ADMIN')">
-                        <li><a href="${pageContext.request.contextPath}/order/orders">Orders</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/orders">Orders</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/list">Users</a></li>
                     </security:authorize>
                 </ul>
@@ -116,8 +116,12 @@
                         <p>Cover : <img src="${tempBook.smallImageUrl}" alt="cover"/></p>
                     </div>
 
-                    <div class="panel-footer">Price : ${tempBook.price} $ <a href="${detailLink}" role="button"
-                                                                             class="btn btn-info">INFO</a></div>
+                    <div class="panel-footer">Price : ${tempBook.price}$
+                        <a href="${detailLink}" role="button" class="btn btn-info">INFO</a>
+                        <security:authorize access="hasRole('ADMIN')">
+                            <a href="${deleteLink}" role="button" class="btn btn-danger">Delete</a>
+                        </security:authorize>
+                    </div>
                 </div>
             </div>
 

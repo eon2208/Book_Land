@@ -55,24 +55,4 @@ public class OrderController {
         return "order/order-confirmation";
     }
 
-    @GetMapping("/orders")
-    public String showOrders(Model model){
-
-        // get all orders
-        List<Order> orderList = orderService.getOrders();
-        if(orderList.isEmpty()){
-            model.addAttribute("emptyError", true);
-
-            return "redirect:/admin/list";
-        }
-
-        // send it as a model
-        model.addAttribute("orderList", orderList);
-
-        return "order/order-list";
-    }
-
-
-
-
 }

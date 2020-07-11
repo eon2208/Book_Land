@@ -45,6 +45,8 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Books> searchByTitle(String search) {
+
+        // get current hibernate session
         Session session = sessionFactory.getCurrentSession();
 
         Query<Books> query = null;
@@ -66,11 +68,12 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Books getBookById(int bookId) {
-        Session session = sessionFactory.getCurrentSession();
 
-        Query<Books> bookById = session.createQuery("from Books where id=:bookId");
-        bookById.setParameter("bookId", bookId);
-        return bookById.getSingleResult();
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        // return book
+        return currentSession.get(Books.class,bookId);
     }
 
 }

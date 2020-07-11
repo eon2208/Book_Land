@@ -22,25 +22,16 @@ public class OrderDaoImpl implements OrderDao {
     public void saveOrder(Order order) {
 
         Session session = sessionFactory.getCurrentSession();
-        session.save(order);
-    }
-
-    @Override
-    public void changeStatusWhereOrderId(int userId, int orderStatus) {
-
-        Session session = sessionFactory.getCurrentSession();
-
-        Query theQuery = session.createQuery("update Order set status =: statusValue where id =: userId",Order.class);
-        theQuery.setParameter("statusValue", orderStatus);
-        theQuery.setParameter("userId",userId);
-        theQuery.executeUpdate();
+        session.saveOrUpdate(order);
     }
 
     @Override
     public List<Order> getUserOrders(long userId) {
 
+        // get current hibernate session
         Session session = sessionFactory.getCurrentSession();
 
+        // create query
         Query<Order> theQuery = session.createQuery("from Order where user.id =:userId", Order.class);
         theQuery.setParameter("userId", userId);
 
@@ -53,16 +44,7 @@ public class OrderDaoImpl implements OrderDao {
 
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Order> theQuery = session.createQuery("from Order where id =: id", Order.class);
-        theQuery.setParameter("id", orderId);
-        Order order = null;
-
-        try {
-            order = theQuery.getSingleResult();
-        } catch (Exception e) {
-            order = null;
-        }
-        return order;
+        return session.get(Order.class,orderId);
     }
 
     @Override
@@ -72,9 +54,7 @@ public class OrderDaoImpl implements OrderDao {
 
         Query<Order> theQuery = session.createQuery("from Order order by date", Order.class);
 
-        List<Order> orderList = theQuery.getResultList();
-
-        return orderList;
+        return theQuery.getResultList();
     }
 
 

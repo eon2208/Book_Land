@@ -19,18 +19,7 @@ public class AddressDaoImpl implements AddressDao {
 
         Session session = sessionFactory.getCurrentSession();
 
-        Query<Address> query = session.createQuery("from Address where id =: address", Address.class);
-        query.setParameter("address", addressId);
-
-        Address address = null;
-
-        try {
-            address = query.getSingleResult();
-        } catch (Exception e) {
-            address = null;
-        }
-
-        return address;
+        return session.get(Address.class,addressId);
     }
 
     @Override

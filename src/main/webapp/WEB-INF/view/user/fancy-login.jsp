@@ -71,7 +71,7 @@
 									</c:if>
 
 									<c:if test="${info != null}">
-										<div class="alert alert-primary col-xs-offset-1 col-xs-10">
+										<div class="alert alert-success col-xs-offset-1 col-xs-10">
 												${info}
 										</div>
 									</c:if>

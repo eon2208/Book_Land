@@ -149,6 +149,7 @@ public class UserServiceImpl implements UserService {
         UserInfoForm userInfoForm = new UserInfoForm();
         User user = findByUserName(userName);
 
+        userInfoForm.setId(user.getId());
         userInfoForm.setFirstName(user.getFirstName());
         userInfoForm.setLastName(user.getLastName());
         userInfoForm.setEmail(user.getEmail());

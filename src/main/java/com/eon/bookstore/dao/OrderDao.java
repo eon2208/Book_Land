@@ -8,8 +8,6 @@ public interface OrderDao {
 
     void saveOrder(Order order);
 
-    void changeStatusWhereOrderId(int userId, int orderStatus);
-
     List<Order> getUserOrders(long userId);
 
     Order getOrderById(int orderId);

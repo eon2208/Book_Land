@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: EoN
@@ -26,6 +27,12 @@
 
     <div class="panel panel-primary">
 
+        <c:url value="/user/saveUserInfoForm" var="saveLink"/>
+
+        <security:authorize access="hasRole('ADMIN')">
+            <c:url value="/admin/saveUser" var="saveLink"/>
+        </security:authorize>
+
         <div class="panel-heading">
             <div class="panel-title">User Info :</div>
         </div>
@@ -33,11 +40,12 @@
         <div style="padding-top: 30px" class="panel-body">
 
             <!-- Order Form -->
-        <form:form action="${pageContext.request.contextPath}/user/saveUserInfoForm" modelAttribute="userInfoForm" method="post">
+        <form:form action="${saveLink}" modelAttribute="userInfoForm" method="post">
+
+            <input type="hidden" name="userName" value="${user.userName}">
 
             <table>
                 <tbody>
-
                 <tr>
                     <td><label>First Name :</label></td>
                     <td><form:input path="firstName" /></td>
@@ -93,10 +101,16 @@
                     <td><input type="submit" value="Save" class="save"></td>
                 </tr>
 
+                <security:authorize access="hasRole('USER')">
                 <tr>
                     <td><label></label></td>
-                    <td><a href="${pageContext.request.contextPath}/cart/">Back to Cart</a></td>
+                    <td><a href="${pageContext.request.contextPath}/cart/">Cart</a></td>
                 </tr>
+                </security:authorize>
+
+                <security:authorize access="hasRole('ADMIN')">
+                    <td><a href="${pageContext.request.contextPath}/admin/list">Back</a></td>
+                </security:authorize>
 
                 </tbody>
             </table>

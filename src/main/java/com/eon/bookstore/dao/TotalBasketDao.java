@@ -12,8 +12,6 @@ public interface TotalBasketDao {
 
     void saveToCart(TotalBasket totalBasket);
 
-    void createBasket(TotalBasket totalBasket);
-
     TotalBasket getTotalBasketByBookId(int bookId);
 
     boolean existsOnTotalBasket(int totalBasketId);

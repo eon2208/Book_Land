@@ -59,8 +59,8 @@
     </div>
 
     <div>
-        <a href="${pageContext.request.contextPath}/admin/list" class="btn btn-primary" role="button"
-           aria-pressed="true">Admin lol</a>
+        <a href="${pageContext.request.contextPath}/cart/deleteAll" class="btn btn-primary" role="button"
+           aria-pressed="true">Delete All</a>
     </div>
 
 

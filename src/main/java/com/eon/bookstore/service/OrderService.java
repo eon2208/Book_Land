@@ -12,6 +12,8 @@ public interface OrderService {
 
     List<OrderedBooks> getListOrderedBooksByOrderId(int orderId);
 
+    void changeStatusWhereOrderId(int userId, int orderStatus);
+
     Order getOrderById(int orderId);
 
     OrderedBooks getOrderedBooksByOrderId(int orderId);

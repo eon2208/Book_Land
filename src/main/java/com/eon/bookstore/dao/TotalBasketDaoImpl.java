@@ -63,13 +63,6 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
         session.saveOrUpdate(totalBasket);
     }
 
-    @Override
-    public void createBasket(TotalBasket totalBasket) {
-
-        Session session = sessionFactory.getCurrentSession();
-
-        session.save(totalBasket);
-    }
 
     @Override
     public TotalBasket getTotalBasketByBookId(int bookId) {
@@ -110,10 +103,12 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public void deleteTotalBasketByBasketId(String basketId) {
 
-        Session session = sessionFactory.getCurrentSession();
+        List<TotalBasket> totalBasketList = getTotalBasketUser(basketId);
 
-        List<TotalBasket> totalBaskets = getTotalBasketUser(basketId);
+        for (TotalBasket totalBasket : totalBasketList) {
+            Session session = sessionFactory.getCurrentSession();
 
-        session.delete(totalBaskets);
+            session.delete(totalBasket);
+        }
     }
 }

@@ -5,6 +5,8 @@ import javax.validation.constraints.Size;
 
 public class UserInfoForm {
 
+    private long id;
+
     @NotNull(message = "is required")
     @Size(min = 1, message = "is required")
     private String firstName;
@@ -41,6 +43,14 @@ public class UserInfoForm {
     private String phone;
 
     public UserInfoForm() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCountry() {

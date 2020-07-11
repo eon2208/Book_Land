@@ -67,6 +67,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public void changeStatusWhereOrderId(int orderId, int orderStatus) {
+
+        Order order = orderDao.getOrderById(orderId);
+        order.setStatus(orderStatus);
+
+        orderDao.saveOrder(order);
+    }
+
+    @Override
     public Order getOrderById(int orderId) {
 
         return orderDao.getOrderById(orderId);

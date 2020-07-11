@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: EoN
@@ -24,18 +25,15 @@
 </div>
 <br>
 <div>
-
-    <form:form action="${pageContext.request.contextPath}/cart/addToCart" method="get">
-
-        Quantity : <input type="number" name="quantity" min="1" value="1"/>
-        <input type="hidden" value="${book.id}" name="bookId">
-
-        <input type="submit" value="Add To Cart" class="add-button">
-
-    </form:form>
+    <security:authorize access="hasAnyRole('ADMIN','USER')">
+        <form:form action="${pageContext.request.contextPath}/cart/addToCart" method="get">
+            Quantity : <input type="number" name="quantity" min="1" value="1"/>
+            <input type="hidden" value="${book.id}" name="bookId">
+            <input type="submit" value="Add To Cart" class="add-button">
+        </form:form>
+    </security:authorize>
     <br>
     <a href="${pageContext.request.contextPath}/home/mainPage">Back</a>
-
 </div>
 </body>
 </html>

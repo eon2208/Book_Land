@@ -21,7 +21,9 @@
     <hr>
 
     <!-- Add a button-->
-    <a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary btn-sm mb-3">Add User</a>
+    <a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary btn-sm mb-3">Add User</a><hr>
+    <a href="${pageContext.request.contextPath}/home/mainPage" class="btn btn-primary btn-sm mb-3">Go Back</a><hr>
+
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
@@ -33,20 +35,24 @@
         </thead>
 
         <tbody>
-        <c:forEach items="${userList}" var="user">
+        <c:forEach items="${userList}" var="orderList">
 
             <c:url value="/admin/deleteUser" var="deleteLink">
-                <c:param name="userName" value="${user.userName}"/>
+                <c:param name="userName" value="${orderList.userName}"/>
             </c:url>
 
-           <%-- <c:url value="/admin/deleteUser" var="deleteLink">
-                <c:param name="userName" value="${user.userName}"/>
-            </c:url>--%>
+            <c:url value="/admin/listOrders" var="ordersLink">
+                <c:param name="userName" value="${orderList.userName}"/>
+            </c:url>
+
+            <c:url value="/admin/showInfo" var="detailLink">
+                <c:param name="userName" value="${orderList.userName}"/>
+            </c:url>
 
         <tr>
-            <td>${user.firstName}</td>
-            <td>${user.lastName}<br></td>
-            <td>${user.email}<br></td>
+            <td>${orderList.firstName}</td>
+            <td>${orderList.lastName}<br></td>
+            <td>${orderList.email}<br></td>
             <td>
                 <a href="${ordersLink}" class="btn btn-info btn-sm">Orders</a>
                 <a href="${detailLink}" class="btn btn-warning btn-sm">Info</a>

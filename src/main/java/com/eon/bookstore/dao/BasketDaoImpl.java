@@ -40,17 +40,7 @@ public class BasketDaoImpl implements BasketDao {
 
         Session currentSession = sessionFactory.getCurrentSession();
 
-        Query<Basket> theQuery = currentSession.createQuery("from Basket where id =:basketId", Basket.class);
-        theQuery.setParameter("basketId",basketId);
-        Basket basket = null;
-
-        try {
-            basket = theQuery.getSingleResult();
-        } catch (Exception e) {
-            basket = null;
-        }
-        return basket;
-
+       return currentSession.get(Basket.class,basketId);
     }
 
     @Override
