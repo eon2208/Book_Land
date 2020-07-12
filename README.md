@@ -11,7 +11,7 @@ made with:
 <li>Validator</li>
 </ul></li>
 <li>JSP</li>
-<li>BootStrap/li>
+<li>BootStrap</li>
 </ul>
 <hr>
 
