@@ -54,7 +54,7 @@ public class AdminController {
 
     // mapping for deleting users
     @GetMapping("deleteUser")
-    public String deleteUser(@RequestParam("userName") String userName, Model model) {
+    public String deleteUser(@RequestParam("userName") String userName) {
 
         adminService.deleteUser(userName);
 

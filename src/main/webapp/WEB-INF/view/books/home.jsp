@@ -14,11 +14,13 @@
     <title>Book Land</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/site.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="<c:url value="/resources/js/bookHandling.js"/>"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 </head>
 <body>
 
@@ -37,7 +39,6 @@
 
                 <ul class="nav navbar-nav">
                     <li><a href="${pageContext.request.contextPath}/home/mainPage">Home</a></li>
-                    <li><a href="#">Contact</a></li>
                     <security:authorize access="hasRole('ADMIN')">
                         <li><a href="${pageContext.request.contextPath}/admin/orders">Orders</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/list">Users</a></li>
@@ -72,21 +73,12 @@
     </nav>
 </header>
 
-<hr>
-
-<c:forEach var="i" begin="1" end="100">
-    <c:url var="pageNumber" value="/home/mainPage">
-        <c:param name="page" value="${i}"/>
-    </c:url>
-    <a href="${pageNumber}">${i}</a>
-</c:forEach>
-
 <br><br>
-
 
 <%--Search Box--%>
 <form:form action="search" method="get">
-    Search : <input type="text" name="search"/>
+    <label for="Search">Search : </label>
+    <input type="text" name="search" id="Search"/>
     <input type="submit" value="Search" class="add-button">
 </form:form>
 
@@ -94,39 +86,69 @@
 
 <%--Listing books --%>
 <div class="container">
-    <div class="row">
+    <table id="books" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Cover</th>
+            <th>Publication Year</th>
+            <th>Rating</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
 
         <c:forEach var="tempBook" items="${books}">
 
-            <c:url var="detailLink" value="/home/details">
-                <c:param name="bookId" value="${tempBook.id}"/>
-            </c:url>
+        <c:url var="detailLink" value="/home/details">
+            <c:param name="bookId" value="${tempBook.id}"/>
+        </c:url>
 
             <%--construct an "delete" link with customer id--%>
-            <c:url var="deleteLink" value="/admin/delete">
-                <c:param name="bookId" value="${tempBook.id}"/>*
-            </c:url>
+        <c:url var="deleteLink" value="/admin/delete">
+            <c:param name="bookId" value="${tempBook.id}"/>*
+        </c:url>
 
-            <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><p>${tempBook.authors}</p></div>
-                    <div class="panel-body">
-                        <span class="align-middle">${tempBook.title}</span>
-                        <p>Rating : ${tempBook.avarageRating}</p>
-                        <p>Cover : <img src="${tempBook.smallImageUrl}" alt="cover"/></p>
-                    </div>
+        <tr>
+            <td>${tempBook.title}</td>
+            <td>${tempBook.authors}</td>
+            <td><img src="${tempBook.smallImageUrl}" alt="cover"></td>
+            <td>${tempBook.originalPublicationYear}</td>
+            <td>${tempBook.avarageRating}</td>
+            <td>${tempBook.price}</td>
+            <td>
+                <a href="${detailLink}" role="button" class="btn btn-info">INFO</a>
+                <security:authorize access="hasRole('ADMIN')">
+                    <a href="${deleteLink}" role="button" class="btn btn-danger">Delete</a>
+                </security:authorize>
+            </td>
+        </tr>
 
-                    <div class="panel-footer">Price : ${tempBook.price}$
-                        <a href="${detailLink}" role="button" class="btn btn-info">INFO</a>
-                        <security:authorize access="hasRole('ADMIN')">
-                            <a href="${deleteLink}" role="button" class="btn btn-danger">Delete</a>
-                        </security:authorize>
-                    </div>
-                </div>
-            </div>
+        </tbody>
 
         </c:forEach>
-    </div>
+
+        <tfoot>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Cover</th>
+            <th>Publication Year</th>
+            <th>Rating</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </tfoot>
+    </table>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#books').DataTable();
+    });
+</script>
 </body>
 </html>

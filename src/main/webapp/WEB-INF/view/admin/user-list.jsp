@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: EoN
@@ -10,11 +12,61 @@
 <html>
 <head>
     <title>Users List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="<c:url value="/resources/js/bookHandling.js"/>"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/home/mainPage">BookLand</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+
+                <ul class="nav navbar-nav">
+                    <li><a href="${pageContext.request.contextPath}/home/mainPage">Home</a></li>
+                    <security:authorize access="hasRole('ADMIN')">
+                        <li><a href="${pageContext.request.contextPath}/admin/orders">Orders</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/list">Users</a></li>
+                    </security:authorize>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <security:authorize access="hasRole('USER')">
+                        <li><a href="${pageContext.request.contextPath}/user/userDetail"><span
+                                class="glyphicon glyphicon-user"></span> Your Account</a></li>
+                        <li><a href="${pageContext.request.contextPath}/cart/"><span
+                                class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+                    </security:authorize>
+
+                    <security:authorize access="!hasAnyRole('USER', 'ADMIN')">
+                        <li><a href="${pageContext.request.contextPath}/login/showMyLoginPage"><span
+                                class="glyphicon glyphicon-user"></span> Login</a></li>
+                    </security:authorize>
+
+                    <security:authorize access="hasAnyRole('USER', 'ADMIN')">
+                        <li><a href="#">
+                            <form:form action="${pageContext.request.contextPath}/logout" method="post">
+                                <input type="submit" value="Logout"/>
+                            </form:form>
+                        </a></li>
+                    </security:authorize>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
 
 <div class="container">
     <h3>Users :</h3>
@@ -41,9 +93,6 @@
                 <c:param name="userName" value="${orderList.userName}"/>
             </c:url>
 
-            <c:url value="/admin/listOrders" var="ordersLink">
-                <c:param name="userName" value="${orderList.userName}"/>
-            </c:url>
 
             <c:url value="/admin/showInfo" var="detailLink">
                 <c:param name="userName" value="${orderList.userName}"/>
@@ -54,7 +103,6 @@
             <td>${orderList.lastName}<br></td>
             <td>${orderList.email}<br></td>
             <td>
-                <a href="${ordersLink}" class="btn btn-info btn-sm">Orders</a>
                 <a href="${detailLink}" class="btn btn-warning btn-sm">Info</a>
                 <a href="${deleteLink}" class="btn btn-danger btn-sm">Delete</a>
             </td>
