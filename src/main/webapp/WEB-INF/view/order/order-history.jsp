@@ -67,21 +67,50 @@
     </nav>
 </header>
 
-<c:forEach items="${orderHistory}" var="orderHistory">
+<div class="container">
+    <h3>Order History</h3>
+    <hr>
 
-${orderHistory.date}
-${orderHistory.value}
-    <c:choose>
-        <c:when test="${orderHistory.status == 1}">In progress</c:when>
-        <c:when test="${orderHistory.status == 2}">Sent</c:when>
-        <c:when test="${orderHistory.status == 3}">Completed</c:when>
-    </c:choose>
+    <a href="${pageContext.request.contextPath}/user/userDetail" class="btn btn-primary btn-sm mb-3">Back</a><hr>
 
-<form:form action="${pageContext.request.contextPath}/user/historyDetail" method="get">
-    <input type="hidden" value="${orderHistory.id}" name="orderId">
-    <input type="submit" value="More Info" class="add-button">
-</form:form>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Order Number</th>
+            <th>Order Date</th>
+            <th>Order Status</th>
+            <th>Value</th>
+            <th>Action</th>
+        </tr>
+        </thead>
 
-</c:forEach>
+        <tbody>
+        <c:forEach items="${orderHistory}" var="orderHistory">
+
+            <c:url value="/user/historyDetail" var="detailLink">
+                <c:param name="orderId" value="${orderHistory.id}"/>
+            </c:url>
+
+            <tr>
+                <td>${orderHistory.id}</td>
+                <td>${orderHistory.date}<br></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${orderHistory.status == 1}">In progress</c:when>
+                        <c:when test="${orderHistory.status == 2}">Sent</c:when>
+                        <c:when test="${orderHistory.status == 3}">Completed</c:when>
+                    </c:choose>
+                </td>
+                <td>${orderHistory.value}<br></td>
+                <td>
+                    <a href="${detailLink}" class="btn btn-info btn-sm">Info</a>
+                </td>
+            </tr>
+
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>

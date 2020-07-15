@@ -121,8 +121,9 @@
                         </div>
                     </div>
                     <hr>
+                    </c:forEach>
                 </div>
-                </c:forEach>
+
 
                 <div class="row">
                     <div class="text-center">
@@ -156,7 +157,6 @@
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

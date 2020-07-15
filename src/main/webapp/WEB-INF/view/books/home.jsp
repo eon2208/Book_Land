@@ -51,7 +51,7 @@
                         <li><a href="${pageContext.request.contextPath}/user/userDetail"><span
                                 class="glyphicon glyphicon-user"></span> Your Account</a></li>
                         <li><a href="${pageContext.request.contextPath}/cart/"><span
-                                class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+                                class="glyphicon glyphicon-shopping-cart">${userCart.totalPrice}</span> Cart</a></li>
                     </security:authorize>
 
                     <security:authorize access="!hasAnyRole('USER', 'ADMIN')">

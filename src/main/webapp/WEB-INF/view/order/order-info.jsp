@@ -67,13 +67,71 @@
     </nav>
 </header>
 
-<c:forEach var="info" items="${orderedBooks}">
+<div class="container">
+    <div class="row justify-content-md-center">
 
-    ${info.books.title}<br>
-    ${info.quantity}<br>
-    ${info.books.price*info.quantity}<br><br><br>
+        <div class="col col-lg-4">
 
-</c:forEach>
+                <h3>User Info</h3>
+                <hr>
 
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Order Addres
+                    </div>
+                    <div class="panel-body">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">First Name : ${orderedBooks.get(0).order.user.firstName}</li>
+                            <li class="list-group-item">Last Name : ${orderedBooks.get(0).order.user.lastName}</li>
+                            <li class="list-group-item">Email : ${orderedBooks.get(0).order.user.email}</li>
+                            <li class="list-group-item">Phone : ${orderedBooks.get(0).order.user.address.phone}</li>
+                            <li class="list-group-item">Country : ${orderedBooks.get(0).order.user.address.country}</li>
+                            <li class="list-group-item">City : ${orderedBooks.get(0).order.user.address.city}</li>
+                            <li class="list-group-item">Street : ${orderedBooks.get(0).order.user.address.street}</li>
+                            <li class="list-group-item">Postal Code : ${orderedBooks.get(0).order.user.address.postalCode}</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col-lg-8">
+                <h3>Order Details</h3>
+                <hr>
+
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Quantity</th>
+                        <th>Cost</th>
+                        <th>Cover</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <c:forEach var="order" items="${orderedBooks}">
+
+                        <c:url var="detailLink" value="/home/details">
+                            <c:param name="bookId" value="${order.books.id}"/>
+                        </c:url>
+
+                            <tr>
+                                <td><a href="${detailLink}">${order.books.title}</a></td>
+                                <td>${order.quantity}<br></td>
+                                <td>${order.books.price * order.quantity}<br></td>
+                                <td><img src="${order.books.imageUrl}"><br></td>
+                            </tr>
+
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

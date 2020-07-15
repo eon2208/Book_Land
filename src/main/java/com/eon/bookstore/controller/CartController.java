@@ -70,9 +70,11 @@ public class CartController {
 
         // get current user
         User user = userService.findByUserName(authentication.getName());
+        String basketId = user.getBasketId();
 
         // delete all items in basket
-        basketService.deleteTotalBasketByBasketId(user.getBasketId());
+        basketService.deleteTotalBasketByBasketId(basketId);
+        basketService.getFinalPrice(basketId);
 
         return "redirect:/cart/";
     }
