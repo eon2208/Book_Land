@@ -8,7 +8,7 @@
   Time: 19:06
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Orders List</title>
@@ -84,40 +84,41 @@
             <th>Order Date</th>
             <th>Value</th>
             <th>Status</th>
+            <th>More</th>
         </tr>
         </thead>
 
         <tbody>
-        <c:forEach items="${orderList}" var="orderList">
+        <c:forEach items="${orderList}" var="orderDetail">
 
-            <c:url value="/admin/deleteUser" var="deleteLink">
-                <c:param name="orderId" value="${orderList.id}"/>
+            <c:url value="/user/historyDetail" var="detailLink">
+                <c:param name="orderId" value="${orderDetail.id}"/>
             </c:url>
 
             <tr>
                 <td>
-                    <p> First Name : ${orderList.user.firstName}<br></p>
-                    <p> Last Name : ${orderList.user.lastName}<br></p>
-                    <p> Email :  ${orderList.user.email}<br></p>
-                    <p> Phone Number :${orderList.user.address.phone}<br></p>
+                    <p> First Name : ${orderDetail.user.firstName}<br></p>
+                    <p> Last Name : ${orderDetail.user.lastName}<br></p>
+                    <p> Email : ${orderDetail.user.email}<br></p>
+                    <p> Phone Number :${orderDetail.user.address.phone}<br></p>
                 </td>
-                <td>${orderList.date}<br></td>
-                <td>${orderList.value}<br></td>
+                <td>${orderDetail.date}<br></td>
+                <td>${orderDetail.value}<br></td>
                 <td>
-                    ${orderList.status}
+                        ${orderDetail.status}
                     <form:form action="${pageContext.request.contextPath}/admin/editStatus" method="get">
-                        <input type="hidden" value="${orderList.id}" name="orderId">
+                        <input type="hidden" value="${orderDetail.id}" name="orderId">
                         <label for="orderStatus">Change Status :</label>
                         <select name="orderStatus" id="orderStatus">
                             <option value="1">In Progress</option>
                             <option value="2">In delivery</option>
                             <option value="3">Completed</option>
                         </select>
-<%--                        <input type="number" id="orderStatus" min="1" max="3" name="orderStatus"/>--%>
                         <input type="submit"/>
                     </form:form>
                     <br>
                 </td>
+                <td><a href="${detailLink}" role="button" class="btn btn-info">Order Details</a></td>
             </tr>
 
         </c:forEach>

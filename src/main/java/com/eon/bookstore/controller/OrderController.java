@@ -43,7 +43,7 @@ public class OrderController {
     }
 
     @GetMapping("/confirm")
-    public String confirmOrder(Authentication authentication, Model model) {
+    public String confirmOrder(Authentication authentication) {
 
         User user = userService.findByUserName(authentication.getName());
         Basket basket = basketService.getBasketById(user.getBasketId());
@@ -52,7 +52,7 @@ public class OrderController {
         orderService.saveOrder(totalBasket, basket, user);
 
 
-        return "order/order-confirmation";
+        return "redirect:/home/mainPage";
     }
 
 }

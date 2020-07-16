@@ -8,7 +8,7 @@
   Time: 00:38
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Book Land</title>
@@ -20,7 +20,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
 </head>
 <body>
 
@@ -73,19 +73,21 @@
     </nav>
 </header>
 
-<br><br>
+<div class="container">
 
 <%--Search Box--%>
-<form:form action="search" method="get">
-    <label for="Search">Search : </label>
-    <input type="text" name="search" id="Search"/>
-    <input type="submit" value="Search" class="add-button">
-</form:form>
-
+    <div class="col-lg-4">
+        <form:form action="search" method="get">
+            <label for="Search">Search : </label>
+            <input type="text" name="search" id="Search"/>
+            <input type="submit" value="Search" class="add-button">
+        </form:form>
+    </div>
 <hr>
 
+    <ul id="pagination-demo" class="pagination-sm"></ul>
+
 <%--Listing books --%>
-<div class="container">
     <table id="books" class="table table-striped table-bordered" style="width:100%">
         <thead>
         <tr>
@@ -127,6 +129,7 @@
             </td>
         </tr>
 
+
         </tbody>
 
         </c:forEach>
@@ -147,8 +150,45 @@
 
 <script>
     $(document).ready(function () {
-        $('#books').DataTable();
+        $('#books').DataTable({
+            "searching": false,// false to disable search (or any other option)
+            "paging": false, // false to disable pagination (or any other option)
+            "ordering": false, // false to disable sorting (or any other option)
+            "pageLength" : 50
+
+        });
     });
 </script>
+
+<script>
+
+    $(document).ready(function () {
+
+        var $pagination = $('#pagination-demo');
+
+        // get page number from URL
+        const queryString = window.location.search;
+        const urlSearchParams = new URLSearchParams(queryString);
+        let page = urlSearchParams.get('page');
+
+        if(page==null)
+            page = "1";
+
+        console.log(page);
+
+        $pagination.twbsPagination({
+            initiateStartPageClick: false,
+                totalPages: 100,
+                visiblePages: 8,
+                startPage: parseInt(page),
+        onPageClick: function (event, currentPage) {
+            const url = "http://localhost:8080/Book_Land_war_exploded/home/mainPage";
+            window.location.href = url + "?page=" + currentPage;
+
+        }
+    });
+    })
+</script>
+
 </body>
 </html>

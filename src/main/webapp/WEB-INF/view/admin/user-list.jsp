@@ -8,7 +8,7 @@
   Time: 12:59
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Users List</title>
@@ -73,8 +73,11 @@
     <hr>
 
     <!-- Add a button-->
-    <a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary btn-sm mb-3">Add User</a><hr>
-    <a href="${pageContext.request.contextPath}/home/mainPage" class="btn btn-primary btn-sm mb-3">Go Back</a><hr>
+    <a href="${pageContext.request.contextPath}/register/showRegistrationForm" class="btn btn-primary btn-sm mb-3">Add
+        User</a>
+    <hr>
+    <a href="${pageContext.request.contextPath}/home/mainPage" class="btn btn-primary btn-sm mb-3">Go Back</a>
+    <hr>
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
@@ -87,26 +90,28 @@
         </thead>
 
         <tbody>
-        <c:forEach items="${userList}" var="orderList">
+        <c:forEach items="${userList}" var="user">
 
-            <c:url value="/admin/deleteUser" var="deleteLink">
-                <c:param name="userName" value="${orderList.userName}"/>
-            </c:url>
+            <c:if test="${user.id != 1}">
 
+                <c:url value="/admin/deleteUser" var="deleteLink">
+                    <c:param name="userName" value="${user.userName}"/>
+                </c:url>
 
-            <c:url value="/admin/showInfo" var="detailLink">
-                <c:param name="userName" value="${orderList.userName}"/>
-            </c:url>
+                <c:url value="/admin/showInfo" var="detailLink">
+                    <c:param name="userName" value="${user.userName}"/>
+                </c:url>
 
-        <tr>
-            <td>${orderList.firstName}</td>
-            <td>${orderList.lastName}<br></td>
-            <td>${orderList.email}<br></td>
-            <td>
-                <a href="${detailLink}" class="btn btn-warning btn-sm">Info</a>
-                <a href="${deleteLink}" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-        </tr>
+                <tr>
+                    <td>${user.firstName}</td>
+                    <td>${user.lastName}<br></td>
+                    <td>${user.email}<br></td>
+                    <td>
+                        <a href="${detailLink}" class="btn btn-warning btn-sm">Info</a>
+                        <a href="${deleteLink}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            </c:if>
 
         </c:forEach>
         </tbody>

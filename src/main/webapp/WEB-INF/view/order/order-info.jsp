@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: EoN
@@ -7,7 +8,7 @@
   Time: 17:48
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Info</title>
@@ -77,7 +78,7 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Order Addres
+                        Order Address
                     </div>
                     <div class="panel-body">
 
@@ -122,7 +123,7 @@
                                 <td><a href="${detailLink}">${order.books.title}</a></td>
                                 <td>${order.quantity}<br></td>
                                 <td>${order.books.price * order.quantity}<br></td>
-                                <td><img src="${order.books.imageUrl}"><br></td>
+                                <td><img src="${order.books.imageUrl}" alt="book cover"><br></td>
                             </tr>
 
                     </c:forEach>
@@ -132,6 +133,5 @@
         </div>
     </div>
 
-</div>
 </body>
 </html>
