@@ -24,9 +24,10 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public TotalBasket getTotalBasketById(int totalBasketId) {
 
-        Session session = sessionFactory.getCurrentSession();
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
 
-        Query<TotalBasket> theQuery = session.createQuery("from TotalBasket where id =:totalBasketId", TotalBasket.class);
+        Query<TotalBasket> theQuery = currentSession.createQuery("from TotalBasket where id =:totalBasketId", TotalBasket.class);
         theQuery.setParameter("totalBasketId", totalBasketId);
         TotalBasket totalBasket = null;
 
@@ -41,9 +42,10 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public List<TotalBasket> getTotalBasketUser(String basketId) {
 
-        Session session = sessionFactory.getCurrentSession();
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
 
-        Query<TotalBasket> theQuery = session.createQuery("from TotalBasket where basket.id=:totalBasketId", TotalBasket.class);
+        Query<TotalBasket> theQuery = currentSession.createQuery("from TotalBasket where basket.id=:totalBasketId", TotalBasket.class);
         theQuery.setParameter("totalBasketId", basketId);
         List<TotalBasket> totalBasket = null;
 
@@ -58,17 +60,20 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public void saveToCart(TotalBasket totalBasket) {
 
-        Session session = sessionFactory.getCurrentSession();
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
 
-        session.saveOrUpdate(totalBasket);
+        currentSession.saveOrUpdate(totalBasket);
     }
 
 
     @Override
     public TotalBasket getTotalBasketByBookId(int bookId) {
-        Session session = sessionFactory.getCurrentSession();
 
-        Query<TotalBasket> theQuery = session.createQuery("from TotalBasket where books.id =:totalBasketBookId", TotalBasket.class);
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        Query<TotalBasket> theQuery = currentSession.createQuery("from TotalBasket where books.id =:totalBasketBookId", TotalBasket.class);
         theQuery.setParameter("totalBasketBookId", bookId);
         TotalBasket totalBasket = null;
 
@@ -84,19 +89,22 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public boolean existsOnTotalBasket(int bookId) {
 
-        Session session = sessionFactory.getCurrentSession();
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
 
-        Query<TotalBasket> theQuery = session.createQuery("from TotalBasket where books.id =:totalBasketId", TotalBasket.class);
+        Query<TotalBasket> theQuery = currentSession.createQuery("from TotalBasket where books.id =:totalBasketId", TotalBasket.class);
         theQuery.setParameter("totalBasketId", bookId);
         return (theQuery.uniqueResult() != null);
     }
 
     @Override
     public void deleteTotalBasketId(int totalBasketId) {
-        Session session = sessionFactory.getCurrentSession();
+
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
 
         TotalBasket totalBasket = getTotalBasketById(totalBasketId);
-        session.delete(totalBasket);
+        currentSession.delete(totalBasket);
 
     }
 

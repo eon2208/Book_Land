@@ -20,6 +20,7 @@ public class BasketDaoImpl implements BasketDao {
     @Override
     public void saveToCart(Basket basket) {
 
+        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         currentSession.saveOrUpdate(basket);
@@ -28,29 +29,37 @@ public class BasketDaoImpl implements BasketDao {
     @Override
     public Basket createBasket(Basket basket) {
 
+        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-                currentSession.saveOrUpdate(basket);
+        // create new basket
+        currentSession.saveOrUpdate(basket);
 
+        // return it
         return basket;
     }
 
     @Override
     public Basket getBasketById(String basketId) {
 
+        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-       return currentSession.get(Basket.class,basketId);
+        // return object with passed id
+        return currentSession.get(Basket.class,basketId);
     }
 
     @Override
     public void deleteBasketById(String basketId) {
 
-        Session session = sessionFactory.getCurrentSession();
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
 
+        // get object
         Basket basket = getBasketById(basketId);
 
-        session.delete(basket);
+        // delete
+        currentSession.delete(basket);
     }
 
 }

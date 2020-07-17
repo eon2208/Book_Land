@@ -18,15 +18,20 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Books> getBooks(int page) {
 
-        Session session = sessionFactory.getCurrentSession();
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
 
-        Query<Books> theQuery = session.createQuery("from Books order by id", Books.class);
+        // create query to get list of books
+        Query<Books> theQuery = currentSession.createQuery("from Books order by id", Books.class);
+
+        // limit of printed objects
         if (page == 1) {
             theQuery.setFirstResult(1);
         } else
             theQuery.setFirstResult(10 * page);
         theQuery.setMaxResults(100);
 
+        // get list of books
         List<Books> books = theQuery.getResultList();
 
         return books;
@@ -35,9 +40,11 @@ public class BookDaoImpl implements BookDao {
     @Override
     public void deleteBook(int bookId) {
 
-        Session session = sessionFactory.getCurrentSession();
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("delete from Books where id=:bookId");
+        //
+        Query query = currentSession.createQuery("delete from Books where id=:bookId");
         query.setParameter("bookId", bookId);
         query.executeUpdate();
 

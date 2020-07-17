@@ -56,11 +56,11 @@
                     </security:authorize>
 
                     <security:authorize access="hasAnyRole('USER', 'ADMIN')">
-                        <li><a href="#">
+                        <li>
                             <form:form action="${pageContext.request.contextPath}/logout" method="post">
                                 <input type="submit" value="Logout"/>
                             </form:form>
-                        </a></li>
+                        </li>
                     </security:authorize>
 
                 </ul>
@@ -80,44 +80,36 @@
 
     <div class="panel-body">
         <div style="margin-bottom: 25px" class="input-group">
-
             First Name : ${user.firstName}
         </div>
 
         <div style="margin-bottom: 25px" class="input-group">
-
             Last Name : ${user.lastName}
         </div>
 
         <div style="margin-bottom: 25px" class="input-group">
-
             Email : ${user.email}
         </div>
 
         <br>
 
         <div style="margin-bottom: 25px" class="input-group">
-
             Country: ${user.address.country}
         </div>
 
         <div style="margin-bottom: 25px" class="input-group">
-
             City : ${user.address.city}
         </div>
 
         <div style="margin-bottom: 25px" class="input-group">
-
             Street : ${user.address.street}
         </div>
 
         <div style="margin-bottom: 25px" class="input-group">
-
             Postal Code : ${user.address.postalCode}
         </div>
 
         <div style="margin-bottom: 25px" class="input-group">
-
             Phone Number : ${user.address.phone}
         </div>
     </div>
@@ -131,7 +123,6 @@
 
         <div class="panel-body">
             <div style="margin-bottom: 25px" class="input-group">
-
                 Title : ${totalBasket.books.title}<br>
                 Author : ${totalBasket.books.authors}<br>
                 Quantity : ${totalBasket.quantity}<br>
@@ -149,8 +140,7 @@
 
     <div class="row">
         <a href="${pageContext.request.contextPath}/cart/" class="btn btn-primary" role="button" aria-pressed="true">Back
-            to
-            Cart</a>
+            to Cart</a>
 
         <a href="${pageContext.request.contextPath}/user/showUserInfoForm" class="btn btn-primary" role="button"
            aria-pressed="true">Edit User Info</a>

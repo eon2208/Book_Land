@@ -48,11 +48,11 @@
                     </security:authorize>
 
                     <security:authorize access="hasAnyRole('USER', 'ADMIN')">
-                        <li><a href="#">
+                        <li>
                             <form:form action="${pageContext.request.contextPath}/logout" method="post">
                                 <input type="submit" value="Logout"/>
                             </form:form>
-                        </a></li>
+                        </li>
                     </security:authorize>
 
                 </ul>
