@@ -1,5 +1,7 @@
 package com.eon.bookstore.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -21,6 +23,7 @@ public class Order {
     private double value;
 
     @Column(name = "order_date")
+    @CreationTimestamp
     private Date date;
 
     @Column(name = "status")
