@@ -14,5 +14,6 @@ made with:
 <li>BootStrap</li>
 </ul>
 <hr>
+<h2>Images of site: click <a href = "images/">Here</a></h2>
 
 
