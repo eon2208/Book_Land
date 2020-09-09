@@ -27,7 +27,6 @@ public class BookLandController {
     @Autowired
     private UserService userService;
 
-    // main page Controller
     @GetMapping("/mainPage")
     public String showHomePage(Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page, Authentication authentication) {
 
@@ -45,25 +44,19 @@ public class BookLandController {
         return "books/home";
     }
 
-
-    // searching books
     @GetMapping("/search")
     public String searchBook(@RequestParam("search") String search, Model model) {
 
-        // search Books from service
         List<Books> booksList = bookService.searchByTitle(search);
 
-        // add books to model
         model.addAttribute("books", booksList);
 
         return "books/home";
     }
 
-    // details of book
     @GetMapping("/details")
     public String showBook(@RequestParam("bookId") int bookId, Model model) {
 
-        // search books from service by bookId
         Books book = bookService.getBookById(bookId);
 
         model.addAttribute("book", book);

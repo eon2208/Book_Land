@@ -30,10 +30,6 @@ public class UserController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private MailSender mailSender;
-
-    // Diagnostic Logger
     private Logger logger = Logger.getLogger(getClass().getName());
 
     @InitBinder
@@ -58,7 +54,6 @@ public class UserController {
     @GetMapping("/showUserInfoForm")
     public String showOrderForm(Authentication authentication, Model model) {
 
-        // linking user for infoChange
         UserInfoForm userInfoForm = userService.userInfoFormModel(authentication.getName());
 
         model.addAttribute("userInfoForm", userInfoForm);
@@ -69,7 +64,6 @@ public class UserController {
     @PostMapping("/saveUserInfoForm")
     public String saveMember(@Valid @ModelAttribute("userInfoForm") UserInfoForm userInfoForm, BindingResult bindingResult, Authentication authentication) {
 
-        // form validation
         if (bindingResult.hasErrors()) {
             return "user/userInfo-form";
         }

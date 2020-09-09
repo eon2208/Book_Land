@@ -24,7 +24,6 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public TotalBasket getTotalBasketById(int totalBasketId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         Query<TotalBasket> theQuery = currentSession.createQuery("from TotalBasket where id =:totalBasketId", TotalBasket.class);
@@ -42,7 +41,6 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public List<TotalBasket> getTotalBasketUser(String basketId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         Query<TotalBasket> theQuery = currentSession.createQuery("from TotalBasket where basket.id=:totalBasketId", TotalBasket.class);
@@ -60,7 +58,6 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public void saveToCart(TotalBasket totalBasket) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         currentSession.saveOrUpdate(totalBasket);
@@ -70,7 +67,6 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public TotalBasket getTotalBasketByBookId(int bookId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         Query<TotalBasket> theQuery = currentSession.createQuery("from TotalBasket where books.id =:totalBasketBookId", TotalBasket.class);
@@ -89,7 +85,6 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public boolean existsOnTotalBasket(int bookId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         Query<TotalBasket> theQuery = currentSession.createQuery("from TotalBasket where books.id =:totalBasketId", TotalBasket.class);
@@ -100,7 +95,6 @@ public class TotalBasketDaoImpl implements TotalBasketDao {
     @Override
     public void deleteTotalBasketId(int totalBasketId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         TotalBasket totalBasket = getTotalBasketById(totalBasketId);

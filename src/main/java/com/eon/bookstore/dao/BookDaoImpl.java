@@ -18,20 +18,16 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Books> getBooks(int page) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // create query to get list of books
         Query<Books> theQuery = currentSession.createQuery("from Books order by id", Books.class);
 
-        // limit of printed objects
         if (page == 1) {
             theQuery.setFirstResult(1);
         } else
             theQuery.setFirstResult(10 * page);
         theQuery.setMaxResults(100);
 
-        // get list of books
         List<Books> books = theQuery.getResultList();
 
         return books;
@@ -40,10 +36,8 @@ public class BookDaoImpl implements BookDao {
     @Override
     public void deleteBook(int bookId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        //
         Query query = currentSession.createQuery("delete from Books where id=:bookId");
         query.setParameter("bookId", bookId);
         query.executeUpdate();
@@ -53,7 +47,6 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Books> searchByTitle(String search) {
 
-        // get current hibernate session
         Session session = sessionFactory.getCurrentSession();
 
         Query<Books> query = null;
@@ -64,7 +57,7 @@ public class BookDaoImpl implements BookDao {
                     " or Lower(originalPublicationYear) like :search ", Books.class);
             query.setParameter("search", "%" + search.toLowerCase() + "%");
         } else {
-            // if empty
+
             query = session.createQuery("from Books", Books.class);
         }
 
@@ -76,10 +69,8 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Books getBookById(int bookId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // return book
         return currentSession.get(Books.class,bookId);
     }
 

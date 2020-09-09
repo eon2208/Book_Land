@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // add a reference to our security data source
     @Autowired
     private UserService userService;
 
@@ -31,7 +30,6 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // Spring Security configuration
         http.authorizeRequests()
                 .antMatchers("/home/mainPage").permitAll()
                 .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
@@ -48,13 +46,11 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/user/accessDenied");
     }
 
-    // bcrypt
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-    // authentication
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();

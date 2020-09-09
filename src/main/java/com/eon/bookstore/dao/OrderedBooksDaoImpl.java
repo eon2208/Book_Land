@@ -18,7 +18,6 @@ public class OrderedBooksDaoImpl implements OrderedBooksDao {
     @Override
     public void saveToOrderedBooks(OrderedBooks orderedBooks) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         currentSession.save(orderedBooks);
@@ -27,7 +26,6 @@ public class OrderedBooksDaoImpl implements OrderedBooksDao {
     @Override
     public List<OrderedBooks> getListOrderedBooksByOrderId(int orderId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         Query<OrderedBooks> theQuery = currentSession.createQuery("from OrderedBooks where order.id =: orderId", OrderedBooks.class);
@@ -39,7 +37,6 @@ public class OrderedBooksDaoImpl implements OrderedBooksDao {
     @Override
     public OrderedBooks getOrderedBooksByOrderId(int orderId) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         Query<OrderedBooks> theQuery = currentSession.createQuery("from OrderedBooks where order.id =: orderId", OrderedBooks.class);

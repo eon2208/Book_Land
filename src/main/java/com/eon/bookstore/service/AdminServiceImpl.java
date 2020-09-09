@@ -32,10 +32,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteUser(String userName) {
 
-        // get User by username
         User user = userService.findByUserName(userName);
 
-        // delete User
         userService.deleteUser(user);
     }
 }

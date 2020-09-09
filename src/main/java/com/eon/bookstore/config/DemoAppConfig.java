@@ -31,14 +31,11 @@ import java.util.logging.Logger;
 @PropertySource("classpath:mailSender.properties")
 public class DemoAppConfig implements WebMvcConfigurer {
 
-    // Variable holing properties
     @Autowired
     private Environment environment;
 
-    // Diagnostic Logger
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    // View Resolver
     @Bean
     public InternalResourceViewResolver viewResolver() {
 
@@ -50,30 +47,24 @@ public class DemoAppConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
-    // security datasource
     @Bean
     public DataSource securityDataSource() {
 
-        // connection pool
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 
-        // jdbc driver
         try {
             comboPooledDataSource.setDriverClass(environment.getProperty("jdbc.driver"));
         } catch (PropertyVetoException ex) {
             throw new RuntimeException(ex);
         }
 
-        // log the connection properties
         logger.info(">>>>>> jdbc.url : " + environment.getProperty("jdbc.url"));
         logger.info(">>>>>> jdbc.user : " + environment.getProperty("jdbc.user"));
 
-        // database conn properties
         comboPooledDataSource.setJdbcUrl(environment.getProperty("jdbc.url"));
         comboPooledDataSource.setUser(environment.getProperty("jdbc.user"));
         comboPooledDataSource.setPassword(environment.getProperty("jdbc.password"));
 
-        // connection pool properties
         comboPooledDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
         comboPooledDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
         comboPooledDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
@@ -92,7 +83,6 @@ public class DemoAppConfig implements WebMvcConfigurer {
 
     private Properties getHibernateProperties() {
 
-        // set hibernate properties
         Properties props = new Properties();
 
         props.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
@@ -104,10 +94,8 @@ public class DemoAppConfig implements WebMvcConfigurer {
     @Bean
     public LocalSessionFactoryBean sessionFactoryBean() {
 
-        // create session factory
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
 
-        // properties
         sessionFactoryBean.setDataSource(securityDataSource());
         sessionFactoryBean.setPackagesToScan(environment.getProperty("hibernate.packagesToScan"));
         sessionFactoryBean.setHibernateProperties(getHibernateProperties());
@@ -119,7 +107,6 @@ public class DemoAppConfig implements WebMvcConfigurer {
     @Autowired
     public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
 
-        // setup transaction manager
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
 

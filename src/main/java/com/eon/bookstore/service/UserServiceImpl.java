@@ -90,7 +90,6 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
 
-        // assign data
         user.setUserName(member.getUserName());
         user.setPassword(passwordEncoder.encode(member.getPassword()));
         user.setFirstName(member.getFirstName());
@@ -98,10 +97,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(member.getEmail());
         user.setAddress(addressDao.getAddressById(1));
 
-        // Def Role of Member
         user.setRoles(Collections.singletonList(roleDao.findRoleByName("ROLE_USER")));
 
-        // save user in db
         userDao.save(user);
     }
 
@@ -113,7 +110,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(User user) {
 
-        // deleting user basket with user
         basketService.deleteBasketById(user.getBasketId());
         userDao.deleteUser(user);
     }
@@ -146,9 +142,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoForm userInfoFormModel(String userName) {
 
-        UserInfoForm userInfoForm = new UserInfoForm();
         User user = findByUserName(userName);
 
+        return saveUserInfoForm(user);
+    }
+
+    private UserInfoForm saveUserInfoForm(User user) {
+        UserInfoForm userInfoForm = new UserInfoForm();
         userInfoForm.setId(user.getId());
         userInfoForm.setFirstName(user.getFirstName());
         userInfoForm.setLastName(user.getLastName());

@@ -30,7 +30,6 @@ public class TokenServiceImpl implements TokenService {
 
         deleteForUserId(user.getId());
 
-        // create new object
         PasswordResetToken passwordResetToken = new PasswordResetToken();
 
         passwordResetToken.setUser(user);

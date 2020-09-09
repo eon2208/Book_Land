@@ -28,7 +28,6 @@ public class CartController {
     @GetMapping("/")
     public String printCart(Model model, Authentication authentication) {
 
-        // get list of all items in cart
         Basket basket = basketService.getBasketById(userService.findByUserName(authentication.getName()).getBasketId());
         List<TotalBasket> totalBasketList = basketService.getTotalBasketUser(basket.getId());
 
@@ -41,7 +40,6 @@ public class CartController {
     @GetMapping("/addToCart")
     public String addToCart(@RequestParam("quantity") int quantity, @RequestParam("bookId") int bookId, Authentication authentication) {
 
-        // false --> add new item
         basketService.saveToCart(bookId, quantity, userService.findByUserName(authentication.getName()).getBasketId(), false);
 
         return "redirect:/home/mainPage";
@@ -50,7 +48,6 @@ public class CartController {
     @GetMapping("/editCart")
     public String editCart(@RequestParam("quantity") int quantity, @RequestParam("bookId") int bookId, Authentication authentication) {
 
-        // true --> edit cart
         basketService.saveToCart(bookId, quantity, userService.findByUserName(authentication.getName()).getBasketId(), true);
 
         return "redirect:/cart/";
@@ -68,11 +65,9 @@ public class CartController {
     @GetMapping("/deleteAll")
     public String deleteAll(Authentication authentication) {
 
-        // get current user
         User user = userService.findByUserName(authentication.getName());
         String basketId = user.getBasketId();
 
-        // delete all items in basket
         basketService.deleteTotalBasketByBasketId(basketId);
         basketService.getFinalPrice(basketId);
 

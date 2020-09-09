@@ -33,7 +33,6 @@ public class EmailController {
     @Autowired
     private UserService userService;
 
-    // deleting WhiteSpaces
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
 
@@ -41,7 +40,6 @@ public class EmailController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    // Diagnostic Logger
     private Logger logger = Logger.getLogger(getClass().getName());
 
     @GetMapping("/emailForm")
@@ -95,7 +93,6 @@ public class EmailController {
                                @Valid @ModelAttribute("passwordModel") PasswordModel passwordModel,
                                BindingResult bindingResult, Model model) {
 
-        // form validation
         if (bindingResult.hasErrors()) {
             return "email/updatePassword";
         }
@@ -106,13 +103,10 @@ public class EmailController {
             return "user/fancy-login";
         }
 
-        // check if username exists
         User user = userService.getUserByPasswordResetToken(token);
 
-        // change password
         userService.changeUserPassword(user, passwordModel.getPassword());
 
-        // send massage about successful password change
         model.addAttribute("info", "Password Reset completed");
 
         return "user/fancy-login";

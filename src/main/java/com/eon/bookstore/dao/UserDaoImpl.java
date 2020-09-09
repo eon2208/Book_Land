@@ -19,10 +19,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByUserName(String userName) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // create query
         Query<User> theQuery = currentSession.createQuery("from User where userName=:uName", User.class);
         theQuery.setParameter("uName", userName);
         User user = null;
@@ -32,23 +30,18 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             user = null;
         }
-        // return got user
         return user;
     }
 
     @Override
     public List<User> getUsersList() {
 
-        // get current hibernate session
         Session session = sessionFactory.getCurrentSession();
 
-        // create query for listing users in specific order
         Query<User> query = session.createQuery("from User order by lastName", User.class);
 
-        // get users list
         List<User> userList = query.getResultList();
 
-        // return user list
         return userList;
     }
 
@@ -62,10 +55,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void saveBasketId(User user) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // create query for basket save
         Query query = currentSession.createQuery("update User set basketId =: basketId where userName =:uName");
         query.setParameter("uName", user.getUserName());
         query.setParameter("basketId", user.getBasketId());
@@ -76,20 +67,16 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void deleteUser(User user) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // execute statement
         currentSession.delete(user);
     }
 
     @Override
     public User findUserByEmail(String userEmail) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // create query
         Query<User> theQuery = currentSession.createQuery("from User where email=:uEmail", User.class);
         theQuery.setParameter("uEmail", userEmail);
         User user = null;
@@ -99,20 +86,16 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             user = null;
         }
-        // return got user
         return user;
     }
 
     @Override
     public User getUserById(long id) {
 
-        // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // create ask for user
         User user = currentSession.get(User.class, id);
 
-        // Return user
         return user;
     }
 

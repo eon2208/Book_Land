@@ -23,12 +23,8 @@ import java.util.logging.Logger;
 @RequestMapping("/admin")
 public class AdminController {
 
-    // Basic CRUD options
-
-    // Diagnostic Logger
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    // Spring field injections
     @Autowired
     private AdminService adminService;
 
@@ -41,7 +37,6 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    // mapping for listing Users
     @GetMapping("/list")
     public String listUsers(Model model) {
 
@@ -52,7 +47,6 @@ public class AdminController {
         return "admin/user-list";
     }
 
-    // mapping for deleting users
     @GetMapping("deleteUser")
     public String deleteUser(@RequestParam("userName") String userName) {
 
@@ -61,8 +55,6 @@ public class AdminController {
         return "redirect:/admin/list";
     }
 
-
-    // delete a book
     @GetMapping("/delete")
     public String delete(@RequestParam("bookId") int id) {
 
@@ -71,12 +63,9 @@ public class AdminController {
         return "redirect:/home/mainPage";
     }
 
-    // listing all orders
-    // changing status of order for user
     @GetMapping("/orders")
     public String showOrders(Model model) {
 
-        // get all orders
         List<Order> orderList = orderService.getOrders();
         if (orderList.isEmpty()) {
             model.addAttribute("emptyError", true);
@@ -84,7 +73,6 @@ public class AdminController {
             return "redirect:/admin/list";
         }
 
-        // send it as a model
         model.addAttribute("orderList", orderList);
 
         return "admin/order-list";
@@ -115,7 +103,6 @@ public class AdminController {
     public String editUser(@Valid @ModelAttribute("userInfoForm") UserInfoForm userInfoForm, BindingResult bindingResult, @RequestParam("userName") String userName) {
 
         try{
-            // form validation
             if (bindingResult.hasErrors()) {
                 return "user/userInfo-form";
             }

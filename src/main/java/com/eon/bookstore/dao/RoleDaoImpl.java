@@ -11,17 +11,14 @@ import com.eon.bookstore.entity.Role;
 @Repository
 public class RoleDaoImpl implements RoleDao {
 
-	// need to inject the session factory
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
 	public Role findRoleByName(String theRoleName) {
 
-		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		// now retrieve/read from database using name
 		Query<Role> theQuery = currentSession.createQuery("from Role where name=:roleName", Role.class);
 		theQuery.setParameter("roleName", theRoleName);
 		

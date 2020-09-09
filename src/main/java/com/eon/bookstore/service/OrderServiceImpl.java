@@ -31,7 +31,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void saveOrder(List<TotalBasket> totalBasketList, Basket basket, User user) {
 
-        // format date to sql yyyy/mm/dd
         java.util.Date date= new java.util.Date();
         java.sql.Date sqlDate= new java.sql.Date(date.getTime());
 

@@ -20,7 +20,6 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    // deleting WhiteSpaces
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
 
@@ -39,12 +38,10 @@ public class RegistrationController {
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(@Valid @ModelAttribute("member") Member member, BindingResult bindingResult, Model model) {
 
-        // form validation
         if (bindingResult.hasErrors()) {
             return "user/registration/registration-form";
         }
 
-        // check if username exists
         User user = userService.findByUserName(member.getUserName());
         if (user != null) {
             model.addAttribute("member", new Member());
@@ -53,10 +50,8 @@ public class RegistrationController {
             return "user/registration/registration-form";
         }
 
-        // save user
         userService.save(member);
 
-        // send massage about successful registration
         model.addAttribute("info", "Registration Successful");
 
         return "user/registration/registration-form";

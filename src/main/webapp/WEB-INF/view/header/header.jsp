@@ -1,4 +1,5 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <div class="header">
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -37,7 +38,7 @@
                     <security:authorize access="hasAnyRole('USER', 'ADMIN')">
                         <li>
                             <form:form action="${pageContext.request.contextPath}/logout" method="post">
-                                <input type="submit" value="Logout"/>
+                                <input type="submit" value="Logout" role="button" class="btn btn-info btn-sm"/>
                             </form:form>
                         </li>
                     </security:authorize>

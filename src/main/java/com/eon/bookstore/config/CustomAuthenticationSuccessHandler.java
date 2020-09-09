@@ -37,17 +37,23 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 		User theUser = userService.findByUserName(userName);
 
-		// connecting logged user and the basket
-		if(theUser.getBasketId() == null) {
-			Basket basket = basketService.createBasket();
-			theUser.setBasketId(basket.getId());
-			userService.saveBasketId(theUser);
+		if(ifUserHasBasket(theUser)) {
+			assignBasketToUser(theUser);
 		}
 
 		System.out.println("token : " + theUser.getBasketId());
-		
-		// forward to home page
+
 		response.sendRedirect(request.getContextPath() + "/home/mainPage");
+	}
+
+	private boolean ifUserHasBasket(User theUser) {
+		return theUser.getBasketId() == null;
+	}
+
+	private void assignBasketToUser(User theUser) {
+		Basket basket = basketService.createBasket();
+		theUser.setBasketId(basket.getId());
+		userService.saveBasketId(theUser);
 	}
 
 }
