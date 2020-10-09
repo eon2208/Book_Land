@@ -43,6 +43,11 @@ public class OrderServiceImpl implements OrderService {
 
         orderDao.saveOrder(order);
 
+        sendOrderToDb(totalBasketList, order);
+        basketService.getFinalPrice(basket.getId());
+    }
+
+    private void sendOrderToDb(List<TotalBasket> totalBasketList, Order order) {
         for (TotalBasket totalBasket : totalBasketList) {
 
             OrderedBooks orderedBooks = new OrderedBooks();
@@ -53,9 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
             orderedBooksDao.saveToOrderedBooks(orderedBooks);
             basketService.deleteTotalBasketById(totalBasket.getId());
-
         }
-        basketService.getFinalPrice(basket.getId());
     }
 
     @Override

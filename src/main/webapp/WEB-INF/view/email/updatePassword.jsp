@@ -33,7 +33,7 @@
         <div class="panel panel-primary">
 
             <div class="panel-heading">
-                <div class="panel-title">Reset Passwordr</div>
+                <div class="panel-title">Reset Password</div>
             </div>
 
             <div style="padding-top: 30px" class="panel-body">

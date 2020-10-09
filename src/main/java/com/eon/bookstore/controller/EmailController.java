@@ -42,6 +42,8 @@ public class EmailController {
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
+    
+
     @GetMapping("/emailForm")
     public String showEmailForm() {
 
