@@ -24,14 +24,17 @@ import java.util.logging.Logger;
 @RequestMapping("/email")
 public class EmailController {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public EmailController(JavaMailSender mailSender, TokenService tokenService, UserService userService) {
+        this.mailSender = mailSender;
+        this.tokenService = tokenService;
+        this.userService = userService;
+    }
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {

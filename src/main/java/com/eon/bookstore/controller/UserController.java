@@ -24,13 +24,16 @@ import java.util.logging.Logger;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
     private Logger logger = Logger.getLogger(getClass().getName());
+
+    public UserController(UserService userService, OrderService orderService) {
+        this.userService = userService;
+        this.orderService = orderService;
+    }
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {

@@ -17,15 +17,17 @@ import java.util.List;
 @RequestMapping("/home")
 public class BookLandController {
 
-    // Spring field injections
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
 
-    @Autowired
-    private BasketService basketService;
+    private final BasketService basketService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public BookLandController(BookService bookService, BasketService basketService, UserService userService) {
+        this.bookService = bookService;
+        this.basketService = basketService;
+        this.userService = userService;
+    }
 
     @GetMapping("/mainPage")
     public String showHomePage(Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page, Authentication authentication) {

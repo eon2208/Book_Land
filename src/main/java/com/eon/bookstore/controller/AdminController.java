@@ -25,17 +25,20 @@ public class AdminController {
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
 
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public AdminController(AdminService adminService, BookService bookService, OrderService orderService, UserService userService) {
+        this.adminService = adminService;
+        this.bookService = bookService;
+        this.orderService = orderService;
+        this.userService = userService;
+    }
 
     @GetMapping("/list")
     public String listUsers(Model model) {

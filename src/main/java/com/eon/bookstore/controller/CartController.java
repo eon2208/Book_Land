@@ -19,11 +19,14 @@ import java.util.List;
 @RequestMapping("/cart")
 public class CartController {
 
-    @Autowired
-    private BasketService basketService;
+    private final BasketService basketService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public CartController(BasketService basketService, UserService userService) {
+        this.basketService = basketService;
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String printCart(Model model, Authentication authentication) {

@@ -19,14 +19,17 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
-    @Autowired
-    private BasketService basketService;
+    private final BasketService basketService;
+
+    public OrderController(UserService userService, OrderService orderService, BasketService basketService) {
+        this.userService = userService;
+        this.orderService = orderService;
+        this.basketService = basketService;
+    }
 
     @GetMapping("/summary")
     public String completeOrder(Authentication authentication, Model model) {
