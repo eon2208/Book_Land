@@ -119,8 +119,8 @@ public class DemoAppConfig implements WebMvcConfigurer {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("myserverdemo123@gmail.com");
-        mailSender.setPassword("?[S}w)qNv6[;2yKF");
+        mailSender.setUsername([Username]);
+        mailSender.setPassword([Password]);
 
         Properties props = mailSender.getJavaMailProperties();
         props.setProperty("mail.transport.protocol", environment.getProperty("mail.transport.protocol"));
